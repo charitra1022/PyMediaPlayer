@@ -8,7 +8,7 @@ This issue can be resolved if the audio files are pre-processed and converted to
 
 Any contribution to this project will be highly appreciated.
 
-# Connect to me
+# Connect with me
 YouTube:- https://www.youtube.com/c/EverythingComputerized
 
 Linkedin:- https://www.linkedin.com/in/chiku1022/
