@@ -7,5 +7,6 @@ This issue can be resolved if the audio files are pre-processed and converted to
 Any contribution to this project will be highly appreciated.
 
 # Connect to me
-https://www.youtube.com/c/EverythingComputerized
-https://www.linkedin.com/in/chiku1022/
+YouTube:- https://www.youtube.com/c/EverythingComputerized
+
+Linkedin:- https://www.linkedin.com/in/chiku1022/
