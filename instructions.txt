@@ -1,0 +1,9 @@
+A simple media player made in Python using the PyQt5 module. Its a desktop application which can run songs and also display its metadata similar to any other media playback software. Many other functionalities will be added in future.
+
+For running this app, install the following Python modules:-
+1. pyqt5
+2. pyqt5-tools
+3. stagger
+4. pillow
+
+**** Some other modules may also be required. You can connect to me via Linkedin for more details on the same ****
