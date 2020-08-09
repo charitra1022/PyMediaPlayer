@@ -873,7 +873,7 @@ class MainWindow(QMainWindow, Ui_PyMediaPlayer):
         """When the user drops the object to the Window, process and filter them, and then add them to playlist"""
         try:
             for url in e.mimeData().urls():
-                if '.mp3' in url.fileName():    # accept on .mp3 file extensions
+                if '.mp3' in url.fileName() or '.wav' in url.fileName():    # accept only .mp3 & .wav file extensions
                     self.playlist.addMedia(QMediaContent(url))  # add media to the PlaylistView
             self.model.layoutChanged.emit() # emit signal to update the PlaylistView to show up new data
             # If player is in stopped state, play the first track
