@@ -40,14 +40,14 @@ Any contribution to this project will be highly appreciated.
 4. Use the control buttons to control the app's cababilities
 5. Shortcuts can be used when app is in *focus*
    * Play/Pause - <kbd>Space</kbd>
-   * Stop Playback - <kbd>Alt+X</kbd>
-   * Previous Song - <kbd>Alt+P</kbd>
-   * Next Song - <kbd>Alt+N</kbd>
+   * Stop Playback - <kbd>Alt + X</kbd>
+   * Previous Song - <kbd>Alt + P</kbd>
+   * Next Song - <kbd>Alt + N</kbd>
    * Toggle Mute - <kbd>Alt + M</kbd>   
    * Toggle Shuffle - <kbd>Alt + S</kbd>   
-   * Playback type - <kbd>Alt+R</kbd>   
-   * Rewind (-2s) - <kbd>Ctrl+Alt+P</kbd>
-   * Fast Forward (+2s) - <kbd>Ctrl+Alt+N</kbd>
+   * Playback type - <kbd>Alt + R</kbd>   
+   * Rewind (-2s) - <kbd>Ctrl + Alt + P</kbd>
+   * Fast Forward (+2s) - <kbd>Ctrl + Alt + N</kbd>
 
 # Connect with me
 [YouTube](https://www.youtube.com/c/EverythingComputerized)
