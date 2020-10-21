@@ -39,8 +39,8 @@ Any contribution to this project will be highly appreciated.
 3. Playback will start automatically from the first file.
 4. Use the control buttons to control the app's cababilities
 5. Shortcuts can be used when app is in *focus*
-  1. Toggle Shuffle - <kbd>Alt + S</kbd>
-  2. Toggle Mute - <kbd>Alt + M</kbd>
+  * Toggle Shuffle - <kbd>Alt + S</kbd>
+  * Toggle Mute - <kbd>Alt + M</kbd>
   
 
 
