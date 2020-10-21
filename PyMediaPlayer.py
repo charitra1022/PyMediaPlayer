@@ -969,6 +969,14 @@ class MainWindow(QMainWindow, Ui_PyMediaPlayer):
         except Exception as e: pass
 
 
+    def closeEvent(self, event):
+        temp_dir = str(tempfile.gettempdir()) + '\\PyMediaPlayer\\'
+        try:
+            import shutil
+            shutil.rmtree(temp_dir, ignore_errors=True)     # delete temporary files after closing
+        except Exception as e: print("Error in closeEvent fuction:", e)
+
+
 def main():
     app = QtWidgets.QApplication(sys.argv)
     app.setApplicationName("PyMedia Player")
