@@ -21,6 +21,7 @@ Any contribution to this project will be highly appreciated.
 9. Display Audio Info - Album Art, Title, Artist, Year, Sample Rate, Duration, Bitrate
 10. Elapsed/Remaining Time Display
 11. Realtime Progress Seek Bar
+12. Supports keyboard shortcuts for controlling the app
 
 
 
