@@ -610,7 +610,7 @@ class Ui_PyMediaPlayer(object):
         _translate = QtCore.QCoreApplication.translate
         PyMediaPlayer.setWindowTitle(_translate("PyMediaPlayer", "PyMedia Player"))
         self.ThumbnailView.setText(
-            _translate("PyMediaPlayer", "Drag and Drop songs here to add them to the Playlist. Supported format : mp3"))
+            _translate("PyMediaPlayer", "Drag and Drop songs here to add them to the Playlist."))
         self.PlaylistView.setToolTip(_translate("PyMediaPlayer", "Playlist - Drag and drop songs here to play them"))
         self.ElaspedTimeDisplay.setText(_translate("PyMediaPlayer", "--:--"))
         self.TimeSlider.setToolTip(_translate("PyMediaPlayer", "Track Seek"))
