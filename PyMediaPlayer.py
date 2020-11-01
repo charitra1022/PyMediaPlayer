@@ -48,6 +48,8 @@ hostOS = platform.system().lower()
 try:
     if hostOS == "windows": os.environ['QT_MULTIMEDIA_PREFERRED_PLUGINS'] = 'windowsmediafoundation'
     # if hostOS == "linux": os.environ['QT_DEBUG_PLUGINS'] = "1"
+    # enable above statement if code runs into error
+    # helps in detecting the cause of error
 except Exception as e:
     print("Plugin Change Error:", e)
 
