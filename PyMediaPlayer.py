@@ -35,14 +35,19 @@ from PyQt5.QtMultimedia import *
 from PyQt5.QtMultimediaWidgets import *
 from PyQt5.QtCore import Qt
 from PIL import Image, ImageQt
-import stagger, io, os, tempfile, sys
+import stagger, io, os, tempfile, sys, platform
+
+
+# keep track of the Host Operating System
+hostOS = platform.system().lower()
+
 
 # change the media plugin in Windows OS for better media support
 # default plugin of Windows OS is 'DirectShow' released for XP which is outdated
 # new plugin is 'Windows Media Foundation' released for and after Windows Vista
 try:
-    import platform
-    if platform.system().lower() == "windows": os.environ['QT_MULTIMEDIA_PREFERRED_PLUGINS'] = 'windowsmediafoundation'
+    if hostOS == "windows": os.environ['QT_MULTIMEDIA_PREFERRED_PLUGINS'] = 'windowsmediafoundation'
+    # if hostOS == "linux": os.environ['QT_DEBUG_PLUGINS'] = "1"
 except Exception as e:
     print("Plugin Change Error:", e)
 
@@ -646,7 +651,6 @@ class Ui_PyMediaPlayer(object):
         self.NextButton.setShortcut(_translate("PyMediaPlayer", "Alt+N"))
 
 
-
 #############################################################################################
 class PlaylistModel(QAbstractListModel):
     def __init__(self, playlist, *args, **kwargs):
@@ -779,7 +783,6 @@ class MainWindow(QMainWindow, Ui_PyMediaPlayer):
         else:
             self.TimeSlider.setValue(0)                         # if there is nothing to play, set the player to 0
 
-
     def shuffle_button(self):
         """
         QMediaPlaylist.PlaybackMode.CurrentItemOnce    0- Plays a song and stops there
@@ -806,7 +809,6 @@ class MainWindow(QMainWindow, Ui_PyMediaPlayer):
                     self.RepeatButton.setIcon(icon)  # reset the repeat button
                     self.RepeatButton.setToolTip("Repeat Mode - Stop if the Queue ends\nShortcut: Alt+R")
         except Exception as e: pass
-
 
     def repeat_button(self):
         """
@@ -852,13 +854,11 @@ class MainWindow(QMainWindow, Ui_PyMediaPlayer):
                 self.RepeatButton.setIcon(icon)
         except Exception as e: pass
 
-
     def dragEnterEvent(self, e):
         """When a drag and drop event is made onto the window"""
         try:
             if e.mimeData().hasUrls(): e.acceptProposedAction()
         except Exception as e: pass
-
 
     def dropEvent(self, e):
         """When the user drops the object to the Window, process and filter them, and then add them to playlist"""
@@ -878,7 +878,6 @@ class MainWindow(QMainWindow, Ui_PyMediaPlayer):
                 self.player.play()
         except Exception as e: pass
 
-
     '''def open_file(self):
         path, _ = QFileDialog.getOpenFileName(self, "Open file", "",
                                               "mp3 Audio (*.mp3);")
@@ -895,7 +894,6 @@ class MainWindow(QMainWindow, Ui_PyMediaPlayer):
             if duration >= 0: self.RemainingTimeDisplay.setText(hhmmss(duration))
         except Exception as e: pass
 
-
     def update_position(self, position):
         """Update the TimeDisplay if the TimeSlider is dragged"""
         try:
@@ -906,7 +904,6 @@ class MainWindow(QMainWindow, Ui_PyMediaPlayer):
             self.TimeSlider.blockSignals(False)
         except Exception as e: pass
 
-
     def playlist_selection_changed(self, ix):
         """We receive a QItemSelection from selectionChanged.
         When the new item is selected in the PlaylistView"""
@@ -914,7 +911,6 @@ class MainWindow(QMainWindow, Ui_PyMediaPlayer):
             i = ix.indexes()[0].row()
             self.playlist.setCurrentIndex(i)
         except Exception as e: pass
-
 
     def playlist_position_changed(self, i):
         """When the PlaylistView selection changes, update the player's playlist index and play the new selection"""
@@ -924,19 +920,22 @@ class MainWindow(QMainWindow, Ui_PyMediaPlayer):
                 self.PlaylistView.setCurrentIndex(ix)
         except Exception as e: pass
 
-
     def erroralert(self, *args):
         """If any error occurs in the player, this section is executed"""
         try: self.ThumbnailView.setPixmap(QtGui.QPixmap(""))
         except Exception as e: pass
         self.ThumbnailView.setText("Seems like this media is not supported by PyMedia Player's engine!")
 
-
     def metadata_media(self):
         try:
             if self.player.isMetaDataAvailable():                   # check if metadata is available in the current song
                 file_path = self.player.currentMedia().canonicalUrl().toLocalFile()     # get the abosulte path of the music
-                temp_dir = str(tempfile.gettempdir()) + '\\PyMediaPlayer\\'             # get the absolute path of temporary folder of PyMediaPlayer
+
+                # get the absolute path of temporary folder of PyMediaPlayer
+                if hostOS == 'windows':
+                    temp_dir = str(tempfile.gettempdir()) + '\\PyMediaPlayer\\'     # for windows system
+                if hostOS == 'linux':
+                    temp_dir = str(tempfile.gettempdir()) + '/PyMediaPlayer/'       # for linux system
 
                 try: os.mkdir(temp_dir)          # create a temporary folder for PyMediaPlayer if not present
                 except Exception as e: pass      # generates error if already present
@@ -944,37 +943,52 @@ class MainWindow(QMainWindow, Ui_PyMediaPlayer):
                 title = self.player.metaData(QMediaMetaData.Title)                      # song title
                 artist = self.player.metaData(QMediaMetaData.AlbumArtist)               # song artist
                 year = self.player.metaData(QMediaMetaData.Year)                        # song year
-                duration = hhmmss(self.player.metaData(QMediaMetaData.Duration))        # song duration/length in mm:ss
-                bitrate = self.player.metaData(QMediaMetaData.AudioBitRate) // 1000     # song bitrate in kbps
+
+                duration = self.player.metaData(QMediaMetaData.Duration)                # duration in milli-seconds
+                if not duration: duration = self.player.duration()                      # if normal method fails
+                if duration: duration = hhmmss(duration)                                # duration in hh:mm
+
+                bitrate = self.player.metaData(QMediaMetaData.AudioBitRate)             # song bitrate in bits/sec
+                if not bitrate: bitrate = self.player.metaData("nominal-bitrate")       # if normal method fails
+                if bitrate: bitrate //= 1000                                            # song bitrate in kilobits/sec
+
                 sample_rate = self.player.metaData(QMediaMetaData.SampleRate)           # song sample rate in Hz
 
-                try:
-                    media = stagger.read_tag(file_path)                                                                    # read the metadata of the song
-                    by_data = media[stagger.id3.APIC][0].data                                                              # get the album art metadata
-                    im = io.BytesIO(by_data)                                                                               # grab the actual format of the album art
-                    imageFile = Image.open(im)                                                                             # open the image file as if it were real file
-                    image_name = "{0}{1}.png".format(temp_dir, str(self.player.currentMedia().canonicalUrl().fileName()))  # temporary image file with absolute path and name
-                    imageFile.save(image_name)                                                                             # save the image in the desired location and name
-                except Exception as e: image_name = "icon/PyMediaPlayer.png"                    # if there was not album art, put Logo in its place
+                # NOTE :- Everything works well in Windows OS. Linux OS or other OSes might create some bugs
 
-                self.ThumbnailView.setScaledContents(True)                                      # cover the entire placeholder
-                self.ThumbnailView.setPixmap(QtGui.QPixmap(image_name))                         # set the desired image as the album art
-                self.TitleInput.setText(str(title)) if title else self.TitleInput.setText("-")                                 # display title
-                self.ArtistInput.setText(str(artist)) if artist else self.ArtistInput.setText("-")                             # display artist
-                self.DateInput.setText(str(year)) if year else self.DateInput.setText("-")                                     # display year
+                try:
+                    media = stagger.read_tag(file_path)             # read the metadata of the song
+                    by_data = media[stagger.id3.APIC][0].data       # get the album art metadata
+                    im = io.BytesIO(by_data)                        # grab the actual format of the album art
+                    imageFile = Image.open(im)                      # open the image file as if it were real file
+                    # temporary image file with absolute path and name
+                    image_name = "{0}{1}.png".format(temp_dir, str(self.player.currentMedia().canonicalUrl().fileName()))
+                    imageFile.save(image_name)                      # save the image in the desired location and name
+                except Exception as e:
+                    image_name = "icon/PyMediaPlayer.png"           # if there was not album art, put Logo in its place
+
+                self.ThumbnailView.setScaledContents(True)                      # cover the entire placeholder
+                self.ThumbnailView.setPixmap(QtGui.QPixmap(image_name))         # set the desired image as the album art
+                self.TitleInput.setText(str(title)) if title else self.TitleInput.setText("-")          # display title
+                self.ArtistInput.setText(str(artist)) if artist else self.ArtistInput.setText("-")      # display artist
+                self.DateInput.setText(str(year)) if year else self.DateInput.setText("-")              # display year
+                self.SampleRateInput.setText(str(sample_rate) + ' Hz') if sample_rate else self.SampleRateInput.setText("-")   # display sample rate Hz
                 self.DurationInput.setText(str(duration)) if duration else self.DurationInput.setText("-")                     # display duration mm:ss
                 self.BitrateInput.setText(str(bitrate) + " kbps") if bitrate else self.BitrateInput.setText("-")               # display bitrate kbps
-                self.SampleRateInput.setText(str(sample_rate) + " Hz") if sample_rate else self.SampleRateInput.setText("-")   # display sample rate Hz
 
-        except Exception as e: pass
 
+        except Exception as e: print("Error in metadata_media method: ", e)
 
     def closeEvent(self, event):
-        temp_dir = str(tempfile.gettempdir()) + '\\PyMediaPlayer\\'
+        if hostOS == 'windows':
+            temp_dir = str(tempfile.gettempdir()) + '\\PyMediaPlayer\\'
+        if hostOS == 'linux':
+            temp_dir = str(tempfile.gettempdir()) + '/PyMediaPlayer/'
+
         try:
             import shutil
             shutil.rmtree(temp_dir, ignore_errors=True)     # delete temporary files after closing
-        except Exception as e: print("Error in closeEvent fuction:", e)
+        except Exception as e: print("Error in closeEvent function:", e)
 
 
 def main():
