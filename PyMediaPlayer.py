@@ -31,7 +31,7 @@
 # Universal imports
 from PyQt5 import QtGui, QtWidgets
 from PyQt5.QtWidgets import QMainWindow
-from PyQt5.QtCore import QAbstractListModel, Qt
+from PyQt5.QtCore import QAbstractListModel, Qt, QUrl
 from PyQt5.QtMultimedia import *
 from PIL import Image
 import stagger, io, os, tempfile, sys, platform
@@ -120,6 +120,8 @@ class MainWindow(QMainWindow, Ui_PyMediaPlayer):
 
             # Signal Handlers
             self.VolumeSlider.valueChanged.connect(self.volume_changed)     # when user slides volume slider
+
+            self.add_songs()                                                # add songs from command-line args
 
             self.show()                                                     # show the MainWindow as active
         except Exception as e: pass
@@ -283,6 +285,34 @@ class MainWindow(QMainWindow, Ui_PyMediaPlayer):
                 self.playlist.setCurrentIndex(i)
                 self.player.play()
         except Exception as e: pass
+
+
+    def add_songs(self):
+        """If songs are passed as command-line args, add them to the playlist"""
+        try:
+            songs = []
+            # accept only [.mp3 .wav .aac .wma .m4a .ac3 .amr .ts .flac] file extensions
+            supported_codecs = ['.mp3', '.wav', '.aac', '.wma', '.m4a', '.ac3', '.amr', '.ts', '.flac']
+            for arg in sys.argv:
+                if any(ext in arg for ext in supported_codecs): songs.append(arg)
+
+            # if any song is present, perform action
+            if songs:
+                for song in songs:
+                    url = QUrl.fromLocalFile(song)
+                    self.playlist.addMedia(QMediaContent(url))  # add media to the PlaylistView
+
+                self.model.layoutChanged.emit()  # emit signal to update the PlaylistView to show up new data
+
+                # If player is in stopped state, play the first track
+                if self.player.state() != QMediaPlayer.PlayingState:
+                    i = self.playlist.mediaCount() - len(songs)
+                    self.playlist.setCurrentIndex(i)
+                    self.player.play()
+
+        except Exception as err:
+            print("Error in add_songs method:", err)
+
 
     '''def open_file(self):
         path, _ = QFileDialog.getOpenFileName(self, "Open file", "",
