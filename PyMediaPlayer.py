@@ -28,16 +28,17 @@
 # 2. Icons folder should be correctly placed
 
 
-from PyQt5 import QtCore, QtGui, QtWidgets
+# Universal imports
+from PyQt5 import QtGui, QtWidgets
 from PyQt5.QtWidgets import QMainWindow
-from PyQt5.QtCore import QAbstractListModel
+from PyQt5.QtCore import QAbstractListModel, Qt
 from PyQt5.QtMultimedia import *
-from PyQt5.QtMultimediaWidgets import *
-from PyQt5.QtCore import Qt
-from PIL import Image, ImageQt
+from PIL import Image
 import stagger, io, os, tempfile, sys, platform
 
-from mainUI import Ui_PyMediaPlayer
+# Local imports
+from PyMediaPlayerUI import Ui_PyMediaPlayer
+from hhmmss import hhmmss
 
 
 # keep track of the Host Operating System
@@ -56,16 +57,7 @@ except Exception as e:
     print("Plugin Change Error:", e)
 
 
-def hhmmss(ms):
-    # s = 1000, m = 60000, h = 3600000
-    h, r = divmod(ms, 360000)
-    m, r = divmod(r, 60000)
-    s, _ = divmod(r, 1000)
-    return ("%d:%02d:%02d" % (h, m, s)) if h else ("%d:%02d" % (m, s))
 
-
-
-#############################################################################################
 class PlaylistModel(QAbstractListModel):
     def __init__(self, playlist, *args, **kwargs):
         super(PlaylistModel, self).__init__(*args, **kwargs)
