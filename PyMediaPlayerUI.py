@@ -590,4 +590,3 @@ class Ui_PyMediaPlayer(object):
         self.PlayPauseButton.setShortcut(_translate("PyMediaPlayer", "Space"))
         self.ForwardButton.setShortcut(_translate("PyMediaPlayer", "Ctrl+Alt+N"))
         self.NextButton.setShortcut(_translate("PyMediaPlayer", "Alt+N"))
-
