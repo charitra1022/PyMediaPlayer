@@ -35,7 +35,7 @@ from PyQt5.QtMultimedia import QMediaPlayer, QMediaContent
 import sys, os, tempfile
 
 # Local imports
-from PyMediaPlayerAbstract import MediaPlayer, hostOS
+from PyMediaPlayerAbstract import MediaPlayer, hostOS, supported_codecs
 from SingleApplication import SingleApplicationWithMessaging, SingleApplication
 
 
@@ -74,8 +74,7 @@ class MainWindow(QMainWindow, MediaPlayer):
         """When the user drops the object to the Window, process and filter them, and then add them to playlist"""
         try:
             for url in e.mimeData().urls():
-                # accept only [.mp3 .wav .aac .wma .m4a .ac3 .amr .ts .flac] file extensions
-                supported_codecs = ['.mp3', '.wav', '.aac', '.wma', '.m4a', '.ac3', '.amr', '.ts', '.flac']
+                # accept only specific file extensions
                 if any(ext in url.fileName() for ext in supported_codecs):
                     self.playlist.addMedia(QMediaContent(url))  # add media to the PlaylistView
 
@@ -94,8 +93,7 @@ class MainWindow(QMainWindow, MediaPlayer):
             A list of paths is passed as an argument to this function"""
         try:
             songs = []
-            # accept only [.mp3 .wav .aac .wma .m4a .ac3 .amr .ts .flac] file extensions
-            supported_codecs = ['.mp3', '.wav', '.aac', '.wma', '.m4a', '.ac3', '.amr', '.ts', '.flac']
+            # accept only specific file extensions
             for path in paths:
                 if any(ext in path for ext in supported_codecs): songs.append(path)
 
@@ -118,11 +116,17 @@ class MainWindow(QMainWindow, MediaPlayer):
 
     def accept_songs(self, message):
         """If another instance of app is running,
-            then take the song as message and send it to
-            the already running instance"""
-        print(message.split(';'))
-        message = list(message)
-        self.add_songs(message)
+            then take the song as message and send it as a list to
+            the already running instance
+
+            NOTE:-
+                Message is received as a string joined by ';'
+                So, first split it into a list
+                !! Make sure message is sent as a list, or else it wouldn't work"""
+        try:
+            self.add_songs((message,))
+        except Exception as err:
+            print("Error in accept_songs:", err)
 
     def closeEvent(self, e):
         if hostOS == 'windows':
@@ -147,20 +151,18 @@ def main():
         app.setApplicationName("PyMedia Player")
         if app.isRunning():
             print('Sending parameters to already running instance of app and Exiting.')
-            app.sendMessage(';'.join(sys.argv))
-            sys.exit(1)
+            app.sendMessage(';'.join(sys.argv[1:]))
     else:
         app = SingleApplication(sys.argv, key)
         if app.isRunning():
             print('Another instance of app is already running. Exiting.')
-            sys.exit(1)
 
-
-    # Main window of the app
-    window = MainWindow()
-    app.messageAvailable.connect(window.accept_songs)
-    sys.exit(app.exec_())
-    # MainWindow is Shown from within the MainWindow class declaration
+    if not app.isRunning():
+        # Main window of the app
+        window = MainWindow()
+        app.messageAvailable.connect(window.accept_songs)
+        sys.exit(app.exec_())
+        # MainWindow is Shown from within the MainWindow class declaration
 
 
 
