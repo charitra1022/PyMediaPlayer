@@ -17,6 +17,8 @@ from hhmmss import hhmmss
 
 # keep track of the Host Operating System
 hostOS = platform.system().lower()
+# accept only [.mp3 .wav .aac .wma .m4a .ac3 .amr .ts .flac] file extensions
+supported_codecs = ['.mp3', '.wav', '.aac', '.wma', '.m4a', '.ac3', '.amr', '.ts', '.flac']
 
 class Ui_PyMediaPlayer(object):
     def setupUi(self, PyMediaPlayer):
