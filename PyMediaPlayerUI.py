@@ -250,14 +250,16 @@ class Ui_PyMediaPlayer(object):
         self.ShuffleButton.setSizePolicy(sizePolicy)
         self.ShuffleButton.setStyleSheet("QPushButton{\n"
                                          "color: #333;\n"
-                                         "background: qradialgradient(cx: 0.3, cy: -0.4, fx: 0.3, fy: -0.4, radius: 1.35, stop:0.5 #fff, stop: 1 #d4d4d4);\n"
+                                         "background: qradialgradient(cx: 0.3, cy: -0.4, fx: 0.3, fy: -0.4, radius: "
+                                         "1.35, stop:0.5 #fff, stop: 1 #d4d4d4);\n "
                                          "width: 30px; \n"
                                          "height: 30px;\n"
                                          "border-radius: 15px;\n"
                                          "}\n"
                                          "\n"
                                          "QPushButton:pressed{\n"
-                                         "background: qradialgradient(cx: 0.4, cy: -0.1, fx: 0.4, fy: -0.1, radius: 1.35, stop:1 #fff, stop: 0.4 #ddd);\n"
+                                         "background: qradialgradient(cx: 0.4, cy: -0.1, fx: 0.4, fy: -0.1, radius: "
+                                         "1.35, stop:1 #fff, stop: 0.4 #ddd);\n "
                                          "}\n"
                                          "")
         self.ShuffleButton.setText("")
@@ -275,14 +277,16 @@ class Ui_PyMediaPlayer(object):
         self.RepeatButton.setSizePolicy(sizePolicy)
         self.RepeatButton.setStyleSheet("QPushButton{\n"
                                         "color: #333;\n"
-                                        "background: qradialgradient(cx: 0.3, cy: -0.4, fx: 0.3, fy: -0.4, radius: 1.35, stop:0.5 #fff, stop: 1 #d4d4d4);\n"
+                                        "background: qradialgradient(cx: 0.3, cy: -0.4, fx: 0.3, fy: -0.4, radius: "
+                                        "1.35, stop:0.5 #fff, stop: 1 #d4d4d4);\n "
                                         "width: 30px; \n"
                                         "height: 30px;\n"
                                         "border-radius: 15px;\n"
                                         "}\n"
                                         "\n"
                                         "QPushButton:pressed{\n"
-                                        "background: qradialgradient(cx: 0.4, cy: -0.1, fx: 0.4, fy: -0.1, radius: 1.35, stop:1 #fff, stop: 0.4 #ddd);\n"
+                                        "background: qradialgradient(cx: 0.4, cy: -0.1, fx: 0.4, fy: -0.1, radius: "
+                                        "1.35, stop:1 #fff, stop: 0.4 #ddd);\n "
                                         "}\n"
                                         "")
         self.RepeatButton.setText("")
@@ -300,14 +304,16 @@ class Ui_PyMediaPlayer(object):
         self.StopButton.setSizePolicy(sizePolicy)
         self.StopButton.setStyleSheet("QPushButton{\n"
                                       "color: #333;\n"
-                                      "background: qradialgradient(cx: 0.3, cy: -0.4, fx: 0.3, fy: -0.4, radius: 1.35, stop:0.5 #fff, stop: 1 #d4d4d4);\n"
+                                      "background: qradialgradient(cx: 0.3, cy: -0.4, fx: 0.3, fy: -0.4, radius: "
+                                      "1.35, stop:0.5 #fff, stop: 1 #d4d4d4);\n "
                                       "width: 30px; \n"
                                       "height: 30px;\n"
                                       "border-radius: 15px;\n"
                                       "}\n"
                                       "\n"
                                       "QPushButton:pressed{\n"
-                                      "background: qradialgradient(cx: 0.4, cy: -0.1, fx: 0.4, fy: -0.1, radius: 1.35, stop:1 #fff, stop: 0.4 #ddd);\n"
+                                      "background: qradialgradient(cx: 0.4, cy: -0.1, fx: 0.4, fy: -0.1, radius: "
+                                      "1.35, stop:1 #fff, stop: 0.4 #ddd);\n "
                                       "}\n"
                                       "")
         self.StopButton.setText("")
@@ -329,14 +335,16 @@ class Ui_PyMediaPlayer(object):
         self.PreviousButton.setSizePolicy(sizePolicy)
         self.PreviousButton.setStyleSheet("QPushButton{\n"
                                           "color: #333;\n"
-                                          "background: qradialgradient(cx: 0.3, cy: -0.4, fx: 0.3, fy: -0.4, radius: 1.35, stop:0.5 #fff, stop: 1 #d4d4d4);\n"
+                                          "background: qradialgradient(cx: 0.3, cy: -0.4, fx: 0.3, fy: -0.4, radius: "
+                                          "1.35, stop:0.5 #fff, stop: 1 #d4d4d4);\n "
                                           "width: 30px; \n"
                                           "height: 30px;\n"
                                           "border-radius: 15px;\n"
                                           "}\n"
                                           "\n"
                                           "QPushButton:pressed{\n"
-                                          "background: qradialgradient(cx: 0.4, cy: -0.1, fx: 0.4, fy: -0.1, radius: 1.35, stop:1 #fff, stop: 0.4 #ddd);\n"
+                                          "background: qradialgradient(cx: 0.4, cy: -0.1, fx: 0.4, fy: -0.1, radius: "
+                                          "1.35, stop:1 #fff, stop: 0.4 #ddd);\n "
                                           "}\n"
                                           "")
         self.PreviousButton.setText("")
@@ -353,14 +361,16 @@ class Ui_PyMediaPlayer(object):
         self.RewindButton.setSizePolicy(sizePolicy)
         self.RewindButton.setStyleSheet("QPushButton{\n"
                                         "color: #333;\n"
-                                        "background: qradialgradient(cx: 0.3, cy: -0.4, fx: 0.3, fy: -0.4, radius: 1.35, stop:0.5 #fff, stop: 1 #d4d4d4);\n"
+                                        "background: qradialgradient(cx: 0.3, cy: -0.4, fx: 0.3, fy: -0.4, radius: "
+                                        "1.35, stop:0.5 #fff, stop: 1 #d4d4d4);\n "
                                         "width: 30px; \n"
                                         "height: 30px;\n"
                                         "border-radius: 15px;\n"
                                         "}\n"
                                         "\n"
                                         "QPushButton:pressed{\n"
-                                        "background: qradialgradient(cx: 0.4, cy: -0.1, fx: 0.4, fy: -0.1, radius: 1.35, stop:1 #fff, stop: 0.4 #ddd);\n"
+                                        "background: qradialgradient(cx: 0.4, cy: -0.1, fx: 0.4, fy: -0.1, radius: "
+                                        "1.35, stop:1 #fff, stop: 0.4 #ddd);\n "
                                         "}\n"
                                         "")
         self.RewindButton.setText("")
@@ -377,7 +387,8 @@ class Ui_PyMediaPlayer(object):
         self.PlayPauseButton.setSizePolicy(sizePolicy)
         self.PlayPauseButton.setStyleSheet("QPushButton{\n"
                                            "color: #333;\n"
-                                           "background: qradialgradient(cx: 0.3, cy: -0.4, fx: 0.3, fy: -0.4, radius: 1.35, stop:0.5 #fff, stop: 1 #d4d4d4);\n"
+                                           "background: qradialgradient(cx: 0.3, cy: -0.4, fx: 0.3, fy: -0.4, radius: "
+                                           "1.35, stop:0.5 #fff, stop: 1 #d4d4d4);\n "
                                            "width: 40px; \n"
                                            "height: 40px;\n"
                                            "border-radius: 15px;\n"
@@ -402,14 +413,16 @@ class Ui_PyMediaPlayer(object):
         self.ForwardButton.setSizePolicy(sizePolicy)
         self.ForwardButton.setStyleSheet("QPushButton{\n"
                                          "color: #333;\n"
-                                         "background: qradialgradient(cx: 0.3, cy: -0.4, fx: 0.3, fy: -0.4, radius: 1.35, stop:0.5 #fff, stop: 1 #d4d4d4);\n"
+                                         "background: qradialgradient(cx: 0.3, cy: -0.4, fx: 0.3, fy: -0.4, radius: "
+                                         "1.35, stop:0.5 #fff, stop: 1 #d4d4d4);\n "
                                          "width: 30px; \n"
                                          "height: 30px;\n"
                                          "border-radius: 15px;\n"
                                          "}\n"
                                          "\n"
                                          "QPushButton:pressed{\n"
-                                         "background: qradialgradient(cx: 0.4, cy: -0.1, fx: 0.4, fy: -0.1, radius: 1.35, stop:1 #fff, stop: 0.4 #ddd);\n"
+                                         "background: qradialgradient(cx: 0.4, cy: -0.1, fx: 0.4, fy: -0.1, radius: "
+                                         "1.35, stop:1 #fff, stop: 0.4 #ddd);\n "
                                          "}\n"
                                          "")
         self.ForwardButton.setText("")
@@ -426,14 +439,16 @@ class Ui_PyMediaPlayer(object):
         self.NextButton.setSizePolicy(sizePolicy)
         self.NextButton.setStyleSheet("QPushButton{\n"
                                       "color: #333;\n"
-                                      "background: qradialgradient(cx: 0.3, cy: -0.4, fx: 0.3, fy: -0.4, radius: 1.35, stop:0.5 #fff, stop: 1 #d4d4d4);\n"
+                                      "background: qradialgradient(cx: 0.3, cy: -0.4, fx: 0.3, fy: -0.4, radius: "
+                                      "1.35, stop:0.5 #fff, stop: 1 #d4d4d4);\n "
                                       "width: 30px; \n"
                                       "height: 30px;\n"
                                       "border-radius: 15px;\n"
                                       "}\n"
                                       "\n"
                                       "QPushButton:pressed{\n"
-                                      "background: qradialgradient(cx: 0.4, cy: -0.1, fx: 0.4, fy: -0.1, radius: 1.35, stop:1 #fff, stop: 0.4 #ddd);\n"
+                                      "background: qradialgradient(cx: 0.4, cy: -0.1, fx: 0.4, fy: -0.1, radius: "
+                                      "1.35, stop:1 #fff, stop: 0.4 #ddd);\n "
                                       "}\n"
                                       "")
         self.NextButton.setText("")
@@ -517,14 +532,16 @@ class Ui_PyMediaPlayer(object):
         self.MuteButton.setSizePolicy(sizePolicy)
         self.MuteButton.setStyleSheet("QPushButton{\n"
                                       "color: #333;\n"
-                                      "background: qradialgradient(cx: 0.3, cy: -0.4, fx: 0.3, fy: -0.4, radius: 1.35, stop:0.5 #fff, stop: 1 #d4d4d4);\n"
+                                      "background: qradialgradient(cx: 0.3, cy: -0.4, fx: 0.3, fy: -0.4, radius: "
+                                      "1.35, stop:0.5 #fff, stop: 1 #d4d4d4);\n "
                                       "width: 25px; \n"
                                       "height: 25px;\n"
                                       "border-radius: 10px;\n"
                                       "}\n"
                                       "\n"
                                       "QPushButton:pressed{\n"
-                                      "background: qradialgradient(cx: 0.4, cy: -0.1, fx: 0.4, fy: -0.1, radius: 1.35, stop:1 #fff, stop: 0.4 #ddd);\n"
+                                      "background: qradialgradient(cx: 0.4, cy: -0.1, fx: 0.4, fy: -0.1, radius: "
+                                      "1.35, stop:1 #fff, stop: 0.4 #ddd);\n "
                                       "}\n"
                                       "")
         self.MuteButton.setText("")
