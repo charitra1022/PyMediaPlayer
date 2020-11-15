@@ -126,7 +126,8 @@ class MainWindow(QMainWindow, MediaPlayer):
                 So, first split it into a list
                 !! Make sure message is sent as a list, or else it wouldn't work"""
         try:
-            self.add_songs((message,))
+            message = message.split(';')
+            self.add_songs(message,)
         except Exception as err:
             print("Error in accept_songs:", err)
 
