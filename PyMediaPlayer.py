@@ -29,23 +29,23 @@
 
 
 # Universal imports
-from PyQt5.QtWidgets import QMainWindow
+import os
+import sys
+import tempfile
 from PyQt5.QtCore import QUrl
 from PyQt5.QtMultimedia import QMediaPlayer, QMediaContent
-import sys, os, tempfile
+from PyQt5.QtWidgets import QMainWindow
 
 # Local imports
 from PyMediaPlayerAbstract import MediaPlayer, hostOS, supported_codecs
 from SingleApplication import SingleApplicationWithMessaging, SingleApplication
 
-
-
-
 # change the media plugin in Windows OS for better media support
 # default plugin of Windows OS is 'DirectShow' released for XP which is outdated
 # new plugin is 'Windows Media Foundation' released for and after Windows Vista
 try:
-    if hostOS == "windows": os.environ['QT_MULTIMEDIA_PREFERRED_PLUGINS'] = 'windowsmediafoundation'
+    if hostOS == "windows":
+        os.environ['QT_MULTIMEDIA_PREFERRED_PLUGINS'] = 'windowsmediafoundation'
     # if hostOS == "linux": os.environ['QT_DEBUG_PLUGINS'] = "1"
     # enable above statement if code runs into error
     # helps in detecting the cause of error
@@ -54,6 +54,7 @@ except Exception as err:
 
 
 class MainWindow(QMainWindow, MediaPlayer):
+    """Setup PyMediaPlayer UI, controls and functionalities"""
     def __init__(self, *args, **kwargs):
         super(MainWindow, self).__init__(*args, **kwargs)
         try:
@@ -66,7 +67,8 @@ class MainWindow(QMainWindow, MediaPlayer):
     def dragEnterEvent(self, e):
         """When a drag and drop event is made onto the window"""
         try:
-            if e.mimeData().hasUrls(): e.acceptProposedAction()
+            if e.mimeData().hasUrls():
+                e.acceptProposedAction()
         except Exception as err:
             print("Error in dragEnterEvent:", err)
 
@@ -129,6 +131,8 @@ class MainWindow(QMainWindow, MediaPlayer):
             print("Error in accept_songs:", err)
 
     def closeEvent(self, e):
+        """Called when user attempts to close the app.
+            Redefined for Cleanup all the temporary images before leaving."""
         if hostOS == 'windows':
             temp_dir = str(tempfile.gettempdir()) + '\\PyMediaPlayer\\'
         if hostOS == 'linux':
@@ -146,22 +150,23 @@ def main():
     key = 'PYMEDIAPLAYER-PYQT5-CHARITRA-AGARWAL'
 
     # send commandline args as message
-    if len(sys.argv) > 1:
+    if len(sys.argv) >= 1:
         app = SingleApplicationWithMessaging(sys.argv, key)
         app.setApplicationName("PyMedia Player")
         if app.isRunning():
             print('Sending parameters to already running instance of app and Exiting.')
-            app.sendMessage(';'.join(sys.argv[1:]))
+            app.sendMessage(';'.join(sys.argv))
     else:
         app = SingleApplication(sys.argv, key)
         if app.isRunning():
             print('Another instance of app is already running. Exiting.')
 
     if not app.isRunning():
-        # Main window of the app
-        window = MainWindow()
-        app.messageAvailable.connect(window.accept_songs)
-        sys.exit(app.exec_())
+        # Run the new instance if the app is not running
+        window = MainWindow()                               # Main window of the app
+        app.messageAvailable.connect(window.accept_songs)   # Connect the message passing function for IPC
+        sys.exit(app.exec_())                               # Run the app
+
         # MainWindow is Shown from within the MainWindow class declaration
 
 
