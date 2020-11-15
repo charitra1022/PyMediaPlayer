@@ -30,6 +30,7 @@ thread_id = 1       # Keep track of the threads
 def launcher(cmd):
     """Start a new terminal instance with defined command"""
     global thread_id
+    print()         # Just for clean output
     logging.info("Thread %s: Starting :- %s", thread_id, cmd)
     os.system(cmd)
     logging.info("Thread %s: Finished :- %s", thread_id, cmd)
