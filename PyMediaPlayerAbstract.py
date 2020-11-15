@@ -13,12 +13,21 @@ from PIL import Image
 from PyQt5 import QtWidgets, QtGui, QtCore
 from PyQt5.QtMultimedia import *
 
-from hhmmss import hhmmss
+
+def hhmmss(ms):
+    """Converting milliseconds to hh:mm:ss format"""
+    # s = 1000, m = 60000, h = 3600000
+    h, r = divmod(ms, 360000)
+    m, r = divmod(r, 60000)
+    s, _ = divmod(r, 1000)
+    return ("%d:%02d:%02d" % (h, m, s)) if h else ("%d:%02d" % (m, s))
+
 
 # keep track of the Host Operating System
 hostOS = platform.system().lower()
 # accept only [.mp3 .wav .aac .wma .m4a .ac3 .amr .ts .flac] file extensions
 supported_codecs = ['.mp3', '.wav', '.aac', '.wma', '.m4a', '.ac3', '.amr', '.ts', '.flac']
+
 
 class Ui_PyMediaPlayer(object):
     def setupUi(self, PyMediaPlayer):
@@ -629,6 +638,7 @@ class Ui_PyMediaPlayer(object):
 
 
 class PlaylistModel(QtCore.QAbstractListModel):
+    """Class for Playlist Model"""
     def __init__(self, playlist, *args, **kwargs):
         super(PlaylistModel, self).__init__(*args, **kwargs)
         self.playlist = playlist
@@ -638,39 +648,45 @@ class PlaylistModel(QtCore.QAbstractListModel):
             if role == QtCore.Qt.DisplayRole:
                 media = self.playlist.media(index.row())
                 return media.canonicalUrl().fileName()
-        except Exception as e:
-            pass
+        except Exception as err:
+            print("Error in PlaylistModel - data(): ", err)
 
     def rowCount(self, index):
         try:
             return self.playlist.mediaCount()
-        except Exception as e:
-            pass
+        except Exception as err:
+            print("Error in PlaylistModel - rowCount(): ", err)
 
 
 class MediaPlayer(Ui_PyMediaPlayer):
     def __init__(self):
         self.setupUi(self)
         try:
-            self.player = QMediaPlayer()                # initializing media player object
-            self.player.error.connect(self.error_alert)  # connecting the error handler
-            self.player.play()                          # starting it to play as soon as initialized
+            self.player = QMediaPlayer()                    # initializing media player object
+            self.player.error.connect(self.error_alert)     # connecting the error handler
+            self.player.play()                              # starting it to play as soon as initialized
 
-            self.playlist = QMediaPlaylist()            # create a playlist object
-            self.player.setPlaylist(self.playlist)      # Setup the playlist.
+            self.playlist = QMediaPlaylist()                # create a playlist object
+            self.player.setPlaylist(self.playlist)          # Setup the playlist.
 
-            self.model = PlaylistModel(self.playlist)   # building the playlist model to let it display in the PlaylistView
-            self.PlaylistView.setModel(self.model)      # setting the model to PlayListView
+            self.model = PlaylistModel(
+                self.playlist)      # building the playlist model to let it display in the PlaylistView
+            self.PlaylistView.setModel(self.model)          # setting the model to PlayListView
 
-            self.playlist.currentIndexChanged.connect(self.playlist_position_changed)   # triggered when the Index of the playlist changes
-            selection_model = self.PlaylistView.selectionModel()                        # selection model based on selection of songs from List
+            # triggered when the Index of the playlist changes
+            self.playlist.currentIndexChanged.connect(self.playlist_position_changed)
+            # selection model based on selection of songs from List
+            selection_model = self.PlaylistView.selectionModel()
+            # selection changed event trigger
             selection_model.selectionChanged.connect(self.playlist_selection_changed)
 
-            self.player.durationChanged.connect(self.update_duration)       # when player's duration changes
-            self.player.stateChanged.connect(self.play_pause_icon)          # when player's state changes - {PLaying, Paused, Stopped}
-            self.player.positionChanged.connect(self.update_position)       # when player's position changes(playing mode)
-            self.player.mediaStatusChanged.connect(self.metadata_media)     # when the media is loaded into the player, it triggers
-            self.TimeSlider.valueChanged.connect(self.player.setPosition)   # when TimeSlider is slided
+            self.player.durationChanged.connect(self.update_duration)  # when player's duration changes
+            self.player.stateChanged.connect(
+                self.play_pause_icon)  # when player's state changes - {PLaying, Paused, Stopped}
+            self.player.positionChanged.connect(self.update_position)  # when player's position changes(playing mode)
+            self.player.mediaStatusChanged.connect(
+                self.metadata_media)  # when the media is loaded into the player, it triggers
+            self.TimeSlider.valueChanged.connect(self.player.setPosition)  # when TimeSlider is slided
 
             # button connections
             self.ShuffleButton.clicked.connect(self.shuffle_button)
@@ -683,17 +699,16 @@ class MediaPlayer(Ui_PyMediaPlayer):
             self.RewindButton.clicked.connect(self.rewind_button)
             self.ForwardButton.clicked.connect(self.forward_button)
 
-            self.RewindButton.setAutoRepeat(True)           # Activate long press
-            self.ForwardButton.setAutoRepeat(True)          # Activate long press
-            self.RewindButton.setAutoRepeatDelay(200)       # Long press duration
-            self.ForwardButton.setAutoRepeatDelay(200)      # Long press duration
+            self.RewindButton.setAutoRepeat(True)       # Activate long press
+            self.ForwardButton.setAutoRepeat(True)      # Activate long press
+            self.RewindButton.setAutoRepeatDelay(200)   # Long press duration
+            self.ForwardButton.setAutoRepeatDelay(200)  # Long press duration
 
             # Signal Handlers
             self.VolumeSlider.valueChanged.connect(self.volume_changed)  # when user slides volume slider
 
-        except Exception as e:
-            print("Error in class MediaPlayer:", e)
-
+        except Exception as err:
+            print("Error in class MediaPlayer:", err)
 
     def playlist_position_changed(self, i):
         """When the PlaylistView selection changes, update the player's playlist index and play the new selection"""
@@ -701,7 +716,8 @@ class MediaPlayer(Ui_PyMediaPlayer):
             if i > -1:
                 ix = self.model.index(i)
                 self.PlaylistView.setCurrentIndex(ix)
-        except Exception as e: pass
+        except Exception as err:
+            print("Error in MediaPlayer - playlist_position_changed(): ", err)
 
     def playlist_selection_changed(self, ix):
         """We receive a QItemSelection from selectionChanged.
@@ -709,7 +725,8 @@ class MediaPlayer(Ui_PyMediaPlayer):
         try:
             i = ix.indexes()[0].row()
             self.playlist.setCurrentIndex(i)
-        except Exception as e: pass
+        except Exception as err:
+            print("Error in MediaPlayer - playlist_selection_changed(): ", err)
 
     def play_pause_icon(self):
         """Change the icon of the Play/Pause button based on the state of the MediaPlayer
@@ -717,8 +734,10 @@ class MediaPlayer(Ui_PyMediaPlayer):
         QMediaPlayer.PlayingState	1	The media player is currently playing content.
         QMediaPlayer.PausedState	2   Player has paused playback and will resume from the position the player was paused at."""
         icon = QtGui.QIcon()
-        if self.player.state() == 1: icon.addPixmap(QtGui.QPixmap("icon/pause.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        else: icon.addPixmap(QtGui.QPixmap("icon/play.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        if self.player.state() == 1:
+            icon.addPixmap(QtGui.QPixmap("icon/pause.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        else:
+            icon.addPixmap(QtGui.QPixmap("icon/play.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.PlayPauseButton.setIcon(icon)
 
     def stop_button(self):
@@ -737,10 +756,10 @@ class MediaPlayer(Ui_PyMediaPlayer):
             self.play_pause_icon()
 
     def next_button(self):
-        self.playlist.next()        # play next track
+        self.playlist.next()  # play next track
 
     def previous_button(self):
-        self.playlist.previous()    # play previous track
+        self.playlist.previous()  # play previous track
 
     def mute_button(self):
         """Mute the player based on its Mute status"""
@@ -759,18 +778,20 @@ class MediaPlayer(Ui_PyMediaPlayer):
     def rewind_button(self):
         """Rewind the player by 2 seconds per function call"""
         value = self.TimeSlider.value()
-        if value >= 2000: self.TimeSlider.setValue(value - 2000)  # set player -2s
-        else: self.TimeSlider.setValue(0)                         # set player at the start of the music if it has played for less than 2s
+        if value >= 2000:
+            self.TimeSlider.setValue(value - 2000)  # set player -2s
+        else:
+            self.TimeSlider.setValue(0)  # set player at the start of the music if it has played for less than 2s
 
     def forward_button(self):
         """Fast Forward the player by 2 seconds per function call"""
         value = self.TimeSlider.value()
         if self.player.duration() >= self.TimeSlider.value() + 2000:
-            self.TimeSlider.setValue(value + 2000)              # add 2s to the player if more than 2s of playback is left
+            self.TimeSlider.setValue(value + 2000)  # add 2s to the player if more than 2s of playback is left
         elif self.player.duration() > 0:
-            self.TimeSlider.setValue(self.player.duration())    # if less 2s of playback is left, set player at the end
+            self.TimeSlider.setValue(self.player.duration())  # if less 2s of playback is left, set player at the end
         else:
-            self.TimeSlider.setValue(0)                         # if there is nothing to play, set the player to 0
+            self.TimeSlider.setValue(0)  # if there is nothing to play, set the player to 0
 
     def shuffle_button(self):
         """
@@ -797,7 +818,8 @@ class MediaPlayer(Ui_PyMediaPlayer):
                     icon.addPixmap(QtGui.QPixmap("icon/repeat-all.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
                     self.RepeatButton.setIcon(icon)  # reset the repeat button
                     self.RepeatButton.setToolTip("Repeat Mode - Stop if the Queue ends\nShortcut: Alt+R")
-        except Exception as e: pass
+        except Exception as err:
+            print("Error in MediaPlayer - shuffle_button(): ", err)
 
     def repeat_button(self):
         """
@@ -841,14 +863,16 @@ class MediaPlayer(Ui_PyMediaPlayer):
                 self.RepeatButton.setToolTip("Repeat Mode - Play the current song and Stop there\nShortcut: Alt+R")
                 icon.addPixmap(QtGui.QPixmap("icon/repeat-none.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
                 self.RepeatButton.setIcon(icon)
-        except Exception as e: pass
+        except Exception as err:
+            print("Error in MediaPlayer - repeat_button(): ", err)
 
     def update_duration(self, duration):
         """When a media is loaded into tthe player, update the TimeSlider range and TimeDisplay"""
         try:
             self.TimeSlider.setMaximum(duration)
             if duration >= 0: self.RemainingTimeDisplay.setText(hhmmss(duration))
-        except Exception as e: pass
+        except Exception as err:
+            print("Error in MediaPlayer - update_duration(): ", err)
 
     def update_position(self, position):
         """Update the TimeDisplay if the TimeSlider is dragged"""
@@ -856,75 +880,82 @@ class MediaPlayer(Ui_PyMediaPlayer):
             if position >= 0: self.ElaspedTimeDisplay.setText(hhmmss(position))
             # Disable the events to prevent updating triggering a setPosition event (can cause stuttering).
             self.TimeSlider.blockSignals(True)
-            self.player.setMuted(True)          # Mute when being dragged to prevent distortion
+            self.player.setMuted(True)  # Mute when being dragged to prevent distortion
             self.TimeSlider.setValue(position)
-            self.player.setMuted(False)         # Un-mute when finished dragging
+            self.player.setMuted(False)  # Un-mute when finished dragging
             self.TimeSlider.blockSignals(False)
-        except Exception as e: pass
+        except Exception as err:
+            print("Error in MediaPlayer - update_position(): ", err)
 
     def metadata_media(self):
         try:
-            if self.player.isMetaDataAvailable():                   # check if metadata is available in the current song
-                file_path = self.player.currentMedia().canonicalUrl().toLocalFile()     # get the abosulte path of the music
+            if self.player.isMetaDataAvailable():  # check if metadata is available in the current song
+                file_path = self.player.currentMedia().canonicalUrl().toLocalFile()  # get the abosulte path of the music
 
                 # get the absolute path of temporary folder of PyMediaPlayer
                 if hostOS == 'windows':
-                    temp_dir = str(tempfile.gettempdir()) + '\\PyMediaPlayer\\'     # for windows system
+                    temp_dir = str(tempfile.gettempdir()) + '\\PyMediaPlayer\\'  # for windows system
                 if hostOS == 'linux':
-                    temp_dir = str(tempfile.gettempdir()) + '/PyMediaPlayer/'       # for linux system
+                    temp_dir = str(tempfile.gettempdir()) + '/PyMediaPlayer/'  # for linux system
 
-                try: os.mkdir(temp_dir)          # create a temporary folder for PyMediaPlayer if not present
-                except Exception as e: pass      # generates error if already present
+                try:
+                    os.mkdir(temp_dir)  # create a temporary folder for PyMediaPlayer if not present
+                except Exception as e:
+                    pass  # generates error if already present
 
-                title = self.player.metaData(QMediaMetaData.Title)                      # song title
-                artist = self.player.metaData(QMediaMetaData.AlbumArtist)               # song artist
-                year = self.player.metaData(QMediaMetaData.Year)                        # song year
+                title = self.player.metaData(QMediaMetaData.Title)  # song title
+                artist = self.player.metaData(QMediaMetaData.AlbumArtist)  # song artist
+                year = self.player.metaData(QMediaMetaData.Year)  # song year
 
-                duration = self.player.metaData(QMediaMetaData.Duration)                # duration in milli-seconds
-                if not duration: duration = self.player.duration()                      # if normal method fails
-                if duration: duration = hhmmss(duration)                                # duration in hh:mm
+                duration = self.player.metaData(QMediaMetaData.Duration)  # duration in milli-seconds
+                if not duration: duration = self.player.duration()  # if normal method fails
+                if duration: duration = hhmmss(duration)  # duration in hh:mm
 
-                bitrate = self.player.metaData(QMediaMetaData.AudioBitRate)             # song bitrate in bits/sec
-                if not bitrate: bitrate = self.player.metaData("nominal-bitrate")       # if normal method fails
-                if bitrate: bitrate //= 1000                                            # song bitrate in kilobits/sec
+                bitrate = self.player.metaData(QMediaMetaData.AudioBitRate)  # song bitrate in bits/sec
+                if not bitrate: bitrate = self.player.metaData("nominal-bitrate")  # if normal method fails
+                if bitrate: bitrate //= 1000  # song bitrate in kilobits/sec
 
-                sample_rate = self.player.metaData(QMediaMetaData.SampleRate)           # song sample rate in Hz
+                sample_rate = self.player.metaData(QMediaMetaData.SampleRate)  # song sample rate in Hz
 
                 # NOTE :- Everything works well in Windows OS. Linux OS or other OSes might create some bugs
 
                 try:
-                    media = stagger.read_tag(file_path)             # read the metadata of the song
-                    by_data = media[stagger.id3.APIC][0].data       # get the album art metadata
-                    im = io.BytesIO(by_data)                        # grab the actual format of the album art
-                    imageFile = Image.open(im)                      # open the image file as if it were real file
+                    media = stagger.read_tag(file_path)  # read the metadata of the song
+                    by_data = media[stagger.id3.APIC][0].data  # get the album art metadata
+                    im = io.BytesIO(by_data)  # grab the actual format of the album art
+                    imageFile = Image.open(im)  # open the image file as if it were real file
                     # temporary image file with absolute path and name
-                    image_name = "{0}{1}.png".format(temp_dir, str(self.player.currentMedia().canonicalUrl().fileName()))
-                    imageFile.save(image_name)                      # save the image in the desired location and name
+                    image_name = "{0}{1}.png".format(temp_dir,
+                                                     str(self.player.currentMedia().canonicalUrl().fileName()))
+                    imageFile.save(image_name)  # save the image in the desired location and name
                 except Exception as e:
-                    image_name = "icon/PyMediaPlayer.png"           # if there was not album art, put Logo in its place
+                    image_name = "icon/PyMediaPlayer.png"  # if there was not album art, put Logo in its place
 
-                self.ThumbnailView.setScaledContents(True)                      # cover the entire placeholder
-                self.ThumbnailView.setPixmap(QtGui.QPixmap(image_name))         # set the desired image as the album art
-                self.TitleInput.setText(str(title)) if title else self.TitleInput.setText("-")          # display title
-                self.ArtistInput.setText(str(artist)) if artist else self.ArtistInput.setText("-")      # display artist
-                self.DateInput.setText(str(year)) if year else self.DateInput.setText("-")              # display year
-                self.SampleRateInput.setText(str(sample_rate) + ' Hz') if sample_rate else self.SampleRateInput.setText("-")   # display sample rate Hz
-                self.DurationInput.setText(str(duration)) if duration else self.DurationInput.setText("-")                     # display duration mm:ss
-                self.BitrateInput.setText(str(bitrate) + " kbps") if bitrate else self.BitrateInput.setText("-")               # display bitrate kbps
-
-
-        except Exception as e: print("Error in metadata_media method: ", e)
+                self.ThumbnailView.setScaledContents(True)  # cover the entire placeholder
+                self.ThumbnailView.setPixmap(QtGui.QPixmap(image_name))  # set the desired image as the album art
+                self.TitleInput.setText(str(title)) if title else self.TitleInput.setText("-")  # display title
+                self.ArtistInput.setText(str(artist)) if artist else self.ArtistInput.setText("-")  # display artist
+                self.DateInput.setText(str(year)) if year else self.DateInput.setText("-")  # display year
+                self.SampleRateInput.setText(str(sample_rate) + ' Hz') if sample_rate else self.SampleRateInput.setText(
+                    "-")  # display sample rate Hz
+                self.DurationInput.setText(str(duration)) if duration else self.DurationInput.setText(
+                    "-")  # display duration mm:ss
+                self.BitrateInput.setText(str(bitrate) + " kbps") if bitrate else self.BitrateInput.setText(
+                    "-")  # display bitrate kbps
+        except Exception as err:
+            print("Error in MediaPlayer - metadata_media(): ", err)
 
     def volume_changed(self):
         self.VolumeDisplay.setText(str(self.VolumeSlider.value()))  # display current volume
-        self.player.setVolume(self.VolumeSlider.value())            # set the player volume to desired value
+        self.player.setVolume(self.VolumeSlider.value())  # set the player volume to desired value
 
     def error_alert(self, *args):
         """If any error occurs in the player, this section is executed"""
-        try: self.ThumbnailView.setPixmap(QtGui.QPixmap(""))
-        except Exception as e: pass
+        try:
+            self.ThumbnailView.setPixmap(QtGui.QPixmap(""))
+        except Exception as err:
+            print("Error in MediaPlayer - error_alert(): ", err)
         self.ThumbnailView.setText("Seems like this media is not supported by PyMedia Player's engine!")
-
 
     # Don't delete this comment. Will be working on it in future
     '''def open_file(self):
@@ -934,7 +965,3 @@ class MediaPlayer(Ui_PyMediaPlayer):
             self.playlist.addMedia(
                 QMediaContent(QUrl.fromLocalFile(path)))
         self.model.layoutChanged.emit()'''
-
-
-
-
