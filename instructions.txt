@@ -9,5 +9,6 @@ For running this app, install the following Python modules:-
 It uses Windows Media Foundation in Windows platform, so it can play most of the supported audio formats such as mp3, wav, aac, wma, m4a, ac3, amr, ts, flac, .etc.
 Some minor issues regarding some special formats can arise, but its all up to the media plugin that the host Operating System uses. This application is totally based on the host OS, so results can vary depending on the type and version of the host OS.
 
-Any contribution to this project will be highly appreciated.
-You can create a new branch and upload your edits. I'll check and merge it with master branch if everything works fine.
+There might be some unrecognized issues in non-windows platform like Linux/macOS. So, contribution to this project is always welcomed.
+Read the CONTRIBUTING.md file for more info on how to contribute to this project.
+
