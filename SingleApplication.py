@@ -1,5 +1,5 @@
-#### This is not an official module of PyQt5!
-#### It has been created purposely
+# This is not an official module of PyQt5!
+# It has been created purposely
 
 # Code copied from stackoverflow.com
 # Thread  :- https://stackoverflow.com/questions/8786136/pyqt-how-to-detect-and-close-ui-if-its-already-running
@@ -29,6 +29,7 @@ class SingleApplication(QtWidgets.QApplication):
 
     def isRunning(self):
         return self._running
+
 
 # This will help multiple instances communicate with each other
 class SingleApplicationWithMessaging(SingleApplication):

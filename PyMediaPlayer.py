@@ -171,6 +171,5 @@ def main():
         # MainWindow is Shown from within the MainWindow class declaration
 
 
-
 if __name__ == "__main__":
     main()

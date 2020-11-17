@@ -682,7 +682,7 @@ class MediaPlayer(Ui_PyMediaPlayer):
 
             self.player.durationChanged.connect(self.update_duration)  # when player's duration changes
             self.player.stateChanged.connect(
-                self.play_pause_icon)  # when player's state changes - {PLaying, Paused, Stopped}
+                self.play_pause_icon)  # when player's state changes - {Playing, Paused, Stopped}
             self.player.positionChanged.connect(self.update_position)  # when player's position changes(playing mode)
             self.player.mediaStatusChanged.connect(
                 self.metadata_media)  # when the media is loaded into the player, it triggers
@@ -867,7 +867,7 @@ class MediaPlayer(Ui_PyMediaPlayer):
             print("Error in MediaPlayer - repeat_button(): ", err)
 
     def update_duration(self, duration):
-        """When a media is loaded into tthe player, update the TimeSlider range and TimeDisplay"""
+        """When a media is loaded into the player, update the TimeSlider range and TimeDisplay"""
         try:
             self.TimeSlider.setMaximum(duration)
             if duration >= 0: self.RemainingTimeDisplay.setText(hhmmss(duration))
