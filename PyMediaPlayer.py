@@ -153,7 +153,6 @@ def main():
     # send commandline args as message
     if len(sys.argv) >= 1:
         app = SingleApplicationWithMessaging(sys.argv, key)
-        app.setApplicationName("PyMedia Player")
         if app.isRunning():
             print('Sending parameters to already running instance of app and Exiting.')
             app.sendMessage(';'.join(sys.argv))
@@ -165,6 +164,7 @@ def main():
     if not app.isRunning():
         # Run the new instance if the app is not running
         window = MainWindow()                               # Main window of the app
+        app.setApplicationName("PyMedia Player")            # give name of the application
         app.messageAvailable.connect(window.accept_songs)   # Connect the message passing function for IPC
         sys.exit(app.exec_())                               # Run the app
 
