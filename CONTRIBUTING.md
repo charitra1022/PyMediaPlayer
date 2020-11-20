@@ -12,4 +12,4 @@ To become a part of this project, you can do any/all of the following:-
 6. Creating issues regarding bugs/error/features.
 7. Any other means by which this project can stand out from the croud.
 
-Become a contributor, and help this project become a success in the world of **Open Source**.
+Become a contributor, and, help this project become a success in the world of **Open Source**.
