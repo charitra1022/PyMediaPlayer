@@ -45,7 +45,7 @@ class SingleApplicationWithMessaging(SingleApplication):
             if not self.try_connection():
                 if not self.reset_connection():
                     QtCore.qDebug("Unknown error occurred... Exiting")
-                    sys.exit(1)
+                    raise RuntimeError("Unknown error occurred... Unable to start LocalServer")
 
 
     def try_connection(self):
