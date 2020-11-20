@@ -72,7 +72,7 @@ This is an individual-only project.
 Any contribution to this project will be highly appreciated.
 There might be some issues regarding Linux/macOS. So, anyone interested is welcomed.
 Any bug fix, any edits, any new ideas or any issues are welcomed.
-Please read ![CONTRIBUTING.md](CONTRIBUTING.md) for more info on contribution.
+Please read [CONTRIBUTING.md](CONTRIBUTING.md) for more info on contribution.
 
 
 # Connect with me
