@@ -1,0 +1,1040 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>PyMediaPlayer</class>
+ <widget class="QMainWindow" name="PyMediaPlayer">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>730</width>
+    <height>515</height>
+   </rect>
+  </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
+  </property>
+  <property name="windowTitle">
+   <string>PyMedia Player</string>
+  </property>
+  <property name="windowIcon">
+   <iconset>
+    <normaloff>icon/PyMediaPlayer.png</normaloff>icon/PyMediaPlayer.png</iconset>
+  </property>
+  <property name="styleSheet">
+   <string notr="true"/>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <property name="sizePolicy">
+    <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+     <horstretch>0</horstretch>
+     <verstretch>0</verstretch>
+    </sizepolicy>
+   </property>
+   <layout class="QVBoxLayout" name="verticalLayout_3">
+    <item>
+     <layout class="QVBoxLayout" name="verticalLayoutFullApp">
+      <item>
+       <layout class="QHBoxLayout" name="horizontalLayoutUpper">
+        <item>
+         <widget class="QLabel" name="ThumbnailView">
+          <property name="minimumSize">
+           <size>
+            <width>410</width>
+            <height>410</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>410</width>
+            <height>410</height>
+           </size>
+          </property>
+          <property name="font">
+           <font>
+            <family>Tw Cen MT</family>
+            <pointsize>16</pointsize>
+           </font>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">background:rgba(12,12,233,0.02);
+color:rgba(0,0,0,0.2);
+border:none;
+opacity:0.1;</string>
+          </property>
+          <property name="text">
+           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Drag and Drop songs to add them to the Playlist or Click on the Folder icon to add songs from File Manager.&lt;/p&gt;&lt;p&gt;Only Audio files are supported.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+          </property>
+          <property name="textFormat">
+           <enum>Qt::RichText</enum>
+          </property>
+          <property name="scaledContents">
+           <bool>true</bool>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignCenter</set>
+          </property>
+          <property name="wordWrap">
+           <bool>true</bool>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <layout class="QVBoxLayout" name="verticalLayout">
+          <item>
+           <widget class="QListView" name="PlaylistView">
+            <property name="maximumSize">
+             <size>
+              <width>290</width>
+              <height>260</height>
+             </size>
+            </property>
+            <property name="font">
+             <font>
+              <pointsize>9</pointsize>
+             </font>
+            </property>
+            <property name="acceptDrops">
+             <bool>true</bool>
+            </property>
+            <property name="toolTip">
+             <string>Playlist - Drag and drop songs here to play them</string>
+            </property>
+            <property name="autoFillBackground">
+             <bool>false</bool>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">QListView{
+background-color:rgba(12,12,233,0.02);
+border:none;
+}
+QToolTip { 
+background-color: white; 
+color:rgba(0,0,0,0.9); 
+ border: black solid 1px
+ }</string>
+            </property>
+            <property name="dragEnabled">
+             <bool>true</bool>
+            </property>
+            <property name="dragDropMode">
+             <enum>QAbstractItemView::DragDrop</enum>
+            </property>
+            <property name="alternatingRowColors">
+             <bool>true</bool>
+            </property>
+            <property name="verticalScrollMode">
+             <enum>QAbstractItemView::ScrollPerItem</enum>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QScrollArea" name="scrollArea">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>150</height>
+             </size>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">border: none;</string>
+            </property>
+            <property name="verticalScrollBarPolicy">
+             <enum>Qt::ScrollBarAlwaysOff</enum>
+            </property>
+            <property name="sizeAdjustPolicy">
+             <enum>QAbstractScrollArea::AdjustToContents</enum>
+            </property>
+            <property name="widgetResizable">
+             <bool>true</bool>
+            </property>
+            <widget class="QWidget" name="scrollAreaWidgetContents">
+             <property name="geometry">
+              <rect>
+               <x>0</x>
+               <y>0</y>
+               <width>290</width>
+               <height>150</height>
+              </rect>
+             </property>
+             <layout class="QVBoxLayout" name="verticalLayout_2">
+              <item>
+               <layout class="QGridLayout" name="gridLayout">
+                <item row="2" column="0">
+                 <widget class="QLabel" name="DateLabel">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
+                  <property name="text">
+                   <string>Year:</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="5" column="1">
+                 <widget class="QLabel" name="BitrateInput">
+                  <property name="text">
+                   <string/>
+                  </property>
+                 </widget>
+                </item>
+                <item row="1" column="0">
+                 <widget class="QLabel" name="ArtistLabel">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
+                  <property name="text">
+                   <string>Artist:</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="0" column="1">
+                 <widget class="QLabel" name="TitleInput">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
+                  <property name="text">
+                   <string/>
+                  </property>
+                  <property name="wordWrap">
+                   <bool>false</bool>
+                  </property>
+                 </widget>
+                </item>
+                <item row="4" column="1">
+                 <widget class="QLabel" name="DurationInput">
+                  <property name="text">
+                   <string/>
+                  </property>
+                 </widget>
+                </item>
+                <item row="3" column="1">
+                 <widget class="QLabel" name="SampleRateInput">
+                  <property name="text">
+                   <string/>
+                  </property>
+                 </widget>
+                </item>
+                <item row="4" column="0">
+                 <widget class="QLabel" name="DurationLabel">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
+                  <property name="text">
+                   <string>Duration:</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="5" column="0">
+                 <widget class="QLabel" name="BitrateLabel">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
+                  <property name="text">
+                   <string>Bitrate:</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="2" column="1">
+                 <widget class="QLabel" name="DateInput">
+                  <property name="text">
+                   <string/>
+                  </property>
+                 </widget>
+                </item>
+                <item row="1" column="1">
+                 <widget class="QLabel" name="ArtistInput">
+                  <property name="text">
+                   <string/>
+                  </property>
+                 </widget>
+                </item>
+                <item row="0" column="0">
+                 <widget class="QLabel" name="TitleLabel">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
+                  <property name="text">
+                   <string>Title:</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="3" column="0">
+                 <widget class="QLabel" name="SizeLabel">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
+                  <property name="text">
+                   <string>Sample:</string>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
+              </item>
+             </layout>
+            </widget>
+           </widget>
+          </item>
+         </layout>
+        </item>
+       </layout>
+      </item>
+      <item>
+       <layout class="QVBoxLayout" name="verticalLayoutBottomPanel">
+        <item>
+         <layout class="QHBoxLayout" name="horizontalLayoutTimePanel">
+          <item>
+           <widget class="QLabel" name="ElaspedTimeDisplay">
+            <property name="minimumSize">
+             <size>
+              <width>40</width>
+              <height>0</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>40</width>
+              <height>16777215</height>
+             </size>
+            </property>
+            <property name="font">
+             <font>
+              <family>Bahnschrift SemiLight</family>
+              <pointsize>9</pointsize>
+             </font>
+            </property>
+            <property name="text">
+             <string>00:00</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QSlider" name="TimeSlider">
+            <property name="mouseTracking">
+             <bool>true</bool>
+            </property>
+            <property name="toolTip">
+             <string>Track Seek</string>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">QSlider::groove:horizontal {
+background: white;
+height: 5px;
+}
+
+QSlider::sub-page:horizontal {
+background: qlineargradient(x1: 0, y1: 0,    x2: 0, y2: 1,
+    stop: 0 #66e, stop: 1 #bbf);
+background: qlineargradient(x1: 0, y1: 0.2, x2: 1, y2: 1,
+    stop: 0 #bbf, stop: 1 #55f);
+height: 5px;
+}
+
+QSlider::add-page:horizontal {
+background: qlineargradient(x1: 0, y1: 0,    x2: 0, y2: 1,
+     stop:0.5 #fff, stop: 1 #d4d4d4);
+height: 5px;
+}
+
+QSlider::handle:horizontal {
+background: qlineargradient(x1:0, y1:0, x2:1, y2:1,
+    stop:0 #52307c, stop: 1 #ece6ff);
+width: 13px;
+margin-top: -2px;
+margin-bottom: -2px;
+border-radius: 4px;
+}
+
+QSlider::handle:horizontal:hover {
+background: qlineargradient(x1:0, y1:0, x2:1, y2:1,
+    stop:0 #bca0dc, stop:1 #e0d6ff);
+}
+
+QSlider::sub-page:horizontal:disabled {
+background: #bbb;
+border-color: #999;
+}
+
+QSlider::add-page:horizontal:disabled {
+background: #eee;
+border-color: #999;
+}
+
+QSlider::handle:horizontal:disabled {
+background: #eee;
+border: 1px solid #aaa;
+border-radius: 4px;
+}</string>
+            </property>
+            <property name="pageStep">
+             <number>10</number>
+            </property>
+            <property name="sliderPosition">
+             <number>0</number>
+            </property>
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="invertedControls">
+             <bool>false</bool>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLabel" name="RemainingTimeDisplay">
+            <property name="minimumSize">
+             <size>
+              <width>40</width>
+              <height>0</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>40</width>
+              <height>16777215</height>
+             </size>
+            </property>
+            <property name="font">
+             <font>
+              <family>Bahnschrift SemiLight</family>
+              <pointsize>9</pointsize>
+             </font>
+            </property>
+            <property name="text">
+             <string>00:00</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <layout class="QHBoxLayout" name="horizontalLayoutControls">
+          <item>
+           <layout class="QHBoxLayout" name="horizontalLayout_2">
+            <item>
+             <spacer name="horizontalSpacer_3">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeType">
+               <enum>QSizePolicy::Fixed</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>40</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+            <item>
+             <widget class="QPushButton" name="OpenFiles">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="toolTip">
+               <string>Add songs from Folder
+Shortcut: Alt+O</string>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">QPushButton{
+color: #333;
+background: qradialgradient(cx: 0.3, cy: -0.4, fx: 0.3, fy: -0.4, radius: 1.35, stop:0.5 #fff, stop: 1 #d4d4d4);
+width: 30px; 
+height: 30px;
+border-radius: 15px;
+}
+
+QPushButton:pressed{
+background: qradialgradient(cx: 0.4, cy: -0.1, fx: 0.4, fy: -0.1, radius: 1.35, stop:1 #fff, stop: 0.4 #ddd);
+}
+</string>
+              </property>
+              <property name="text">
+               <string/>
+              </property>
+              <property name="icon">
+               <iconset>
+                <normaloff>icon/open-folder.png</normaloff>icon/open-folder.png</iconset>
+              </property>
+              <property name="shortcut">
+               <string>Alt+O</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <spacer name="horizontalSpacer_5">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeType">
+               <enum>QSizePolicy::Fixed</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>15</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+            <item>
+             <widget class="QPushButton" name="ShuffleButton">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="toolTip">
+               <string>Shuffle Mode is Off
+Shortcut: Alt+S</string>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">QPushButton{
+color: #333;
+background: qradialgradient(cx: 0.3, cy: -0.4, fx: 0.3, fy: -0.4, radius: 1.35, stop:0.5 #fff, stop: 1 #d4d4d4);
+width: 30px; 
+height: 30px;
+border-radius: 15px;
+}
+
+QPushButton:pressed{
+background: qradialgradient(cx: 0.4, cy: -0.1, fx: 0.4, fy: -0.1, radius: 1.35, stop:1 #fff, stop: 0.4 #ddd);
+}
+</string>
+              </property>
+              <property name="text">
+               <string/>
+              </property>
+              <property name="icon">
+               <iconset>
+                <normaloff>icon/shuffle-off.png</normaloff>icon/shuffle-off.png</iconset>
+              </property>
+              <property name="shortcut">
+               <string>Alt+S</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="RepeatButton">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="toolTip">
+               <string>Repeat Mode - Stop if the Queue ends
+Shortcut: Alt+R</string>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">QPushButton{
+color: #333;
+background: qradialgradient(cx: 0.3, cy: -0.4, fx: 0.3, fy: -0.4, radius: 1.35, stop:0.5 #fff, stop: 1 #d4d4d4);
+width: 30px; 
+height: 30px;
+border-radius: 15px;
+}
+
+QPushButton:pressed{
+background: qradialgradient(cx: 0.4, cy: -0.1, fx: 0.4, fy: -0.1, radius: 1.35, stop:1 #fff, stop: 0.4 #ddd);
+}
+</string>
+              </property>
+              <property name="text">
+               <string/>
+              </property>
+              <property name="icon">
+               <iconset>
+                <normaloff>icon/repeat-all.png</normaloff>icon/repeat-all.png</iconset>
+              </property>
+              <property name="shortcut">
+               <string>Alt+R</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="StopButton">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="toolTip">
+               <string>Stop
+Shortcut: Alt+X</string>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">QPushButton{
+color: #333;
+background: qradialgradient(cx: 0.3, cy: -0.4, fx: 0.3, fy: -0.4, radius: 1.35, stop:0.5 #fff, stop: 1 #d4d4d4);
+width: 30px; 
+height: 30px;
+border-radius: 15px;
+}
+
+QPushButton:pressed{
+background: qradialgradient(cx: 0.4, cy: -0.1, fx: 0.4, fy: -0.1, radius: 1.35, stop:1 #fff, stop: 0.4 #ddd);
+}
+</string>
+              </property>
+              <property name="text">
+               <string/>
+              </property>
+              <property name="icon">
+               <iconset>
+                <normaloff>icon/stop.png</normaloff>icon/stop.png</iconset>
+              </property>
+              <property name="shortcut">
+               <string>Alt+X</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <spacer name="horizontalSpacer_2">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeType">
+             <enum>QSizePolicy::Fixed</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>15</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item>
+           <layout class="QHBoxLayout" name="horizontalLayout">
+            <item>
+             <widget class="QPushButton" name="PreviousButton">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="toolTip">
+               <string>Previous Track
+Shortcut: Alt+P</string>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">QPushButton{
+color: #333;
+background: qradialgradient(cx: 0.3, cy: -0.4, fx: 0.3, fy: -0.4, radius: 1.35, stop:0.5 #fff, stop: 1 #d4d4d4);
+width: 30px; 
+height: 30px;
+border-radius: 15px;
+}
+
+QPushButton:pressed{
+background: qradialgradient(cx: 0.4, cy: -0.1, fx: 0.4, fy: -0.1, radius: 1.35, stop:1 #fff, stop: 0.4 #ddd);
+}
+</string>
+              </property>
+              <property name="text">
+               <string/>
+              </property>
+              <property name="icon">
+               <iconset>
+                <normaloff>icon/previous.png</normaloff>icon/previous.png</iconset>
+              </property>
+              <property name="shortcut">
+               <string>Alt+P</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="RewindButton">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="toolTip">
+               <string>-2s/Long press to Rewind
+Shortcut: Ctrl+Alt+P</string>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">QPushButton{
+color: #333;
+background: qradialgradient(cx: 0.3, cy: -0.4, fx: 0.3, fy: -0.4, radius: 1.35, stop:0.5 #fff, stop: 1 #d4d4d4);
+width: 30px; 
+height: 30px;
+border-radius: 15px;
+}
+
+QPushButton:pressed{
+background: qradialgradient(cx: 0.4, cy: -0.1, fx: 0.4, fy: -0.1, radius: 1.35, stop:1 #fff, stop: 0.4 #ddd);
+}
+</string>
+              </property>
+              <property name="text">
+               <string/>
+              </property>
+              <property name="icon">
+               <iconset>
+                <normaloff>icon/rewind.png</normaloff>icon/rewind.png</iconset>
+              </property>
+              <property name="shortcut">
+               <string>Ctrl+Alt+P</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="PlayPauseButton">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="toolTip">
+               <string>Play/Pause
+Shortcut: Spacebar</string>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">QPushButton{
+color: #333;
+background: qradialgradient(cx: 0.3, cy: -0.4, fx: 0.3, fy: -0.4, radius: 1.35, stop:0.5 #fff, stop: 1 #d4d4d4);
+width: 40px; 
+height: 40px;
+border-radius: 15px;
+}
+
+QPushButton:pressed{
+background: qradialgradient(cx: 0.4, cy: -0.1, fx: 0.4, fy: -0.1, radius: 1.35, stop:1 #fff, stop: 0.4 #ddd);
+}
+</string>
+              </property>
+              <property name="text">
+               <string/>
+              </property>
+              <property name="icon">
+               <iconset>
+                <normaloff>icon/play.png</normaloff>icon/play.png</iconset>
+              </property>
+              <property name="iconSize">
+               <size>
+                <width>25</width>
+                <height>25</height>
+               </size>
+              </property>
+              <property name="shortcut">
+               <string>Space</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="ForwardButton">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="toolTip">
+               <string>+2s/Long press to Fast Forward
+Shortcut: Ctrl+Alt+N</string>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">QPushButton{
+color: #333;
+background: qradialgradient(cx: 0.3, cy: -0.4, fx: 0.3, fy: -0.4, radius: 1.35, stop:0.5 #fff, stop: 1 #d4d4d4);
+width: 30px; 
+height: 30px;
+border-radius: 15px;
+}
+
+QPushButton:pressed{
+background: qradialgradient(cx: 0.4, cy: -0.1, fx: 0.4, fy: -0.1, radius: 1.35, stop:1 #fff, stop: 0.4 #ddd);
+}
+</string>
+              </property>
+              <property name="text">
+               <string/>
+              </property>
+              <property name="icon">
+               <iconset>
+                <normaloff>icon/forward.png</normaloff>icon/forward.png</iconset>
+              </property>
+              <property name="shortcut">
+               <string>Ctrl+Alt+Ṇ</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="NextButton">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="toolTip">
+               <string>Next Track
+Shortcut: Alt+N</string>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">QPushButton{
+color: #333;
+background: qradialgradient(cx: 0.3, cy: -0.4, fx: 0.3, fy: -0.4, radius: 1.35, stop:0.5 #fff, stop: 1 #d4d4d4);
+width: 30px; 
+height: 30px;
+border-radius: 15px;
+}
+
+QPushButton:pressed{
+background: qradialgradient(cx: 0.4, cy: -0.1, fx: 0.4, fy: -0.1, radius: 1.35, stop:1 #fff, stop: 0.4 #ddd);
+}
+</string>
+              </property>
+              <property name="text">
+               <string/>
+              </property>
+              <property name="icon">
+               <iconset>
+                <normaloff>icon/next.png</normaloff>icon/next.png</iconset>
+              </property>
+              <property name="shortcut">
+               <string>Alt+N</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <spacer name="horizontalSpacer">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeType">
+             <enum>QSizePolicy::Fixed</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>5</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item>
+           <widget class="QSlider" name="VolumeSlider">
+            <property name="toolTip">
+             <string>Volume Selector</string>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">QSlider::groove:horizontal {
+border: 1px solid #bbb;
+background: white;
+height: 7px;
+border-radius: 4px;
+}
+
+QSlider::sub-page:horizontal {
+background: qlineargradient(x1: 0, y1: 0,    x2: 0, y2: 1,
+    stop: 0 #66e, stop: 1 #bbf);
+background: qlineargradient(x1: 0, y1: 0.2, x2: 1, y2: 1,
+    stop: 0 #bbf, stop: 1 #55f);
+border: 0px solid #777;
+height: 10px;
+border-radius: 4px;
+}
+
+QSlider::add-page:horizontal {
+background: qlineargradient(x1: 0, y1: 0,    x2: 0, y2: 1,
+     stop:0.5 #fff, stop: 1 #d4d4d4);
+
+border: 0px solid #777;
+height: 10px;
+border-radius: 4px;
+}
+
+QSlider::handle:horizontal {
+background: qlineargradient(x1:0, y1:0, x2:1, y2:1,
+    stop:0 #52307c, stop: 1 #ece6ff);
+width: 13px;
+margin-top: -5px;
+margin-bottom: -5px;
+border-radius: 4px;
+}
+
+QSlider::handle:horizontal:hover {
+background: qlineargradient(x1:0, y1:0, x2:1, y2:1,
+    stop:0 #bca0dc, stop:1 #e0d6ff);
+border: 0px solid #444;
+border-radius: 4px;
+}
+
+QSlider::sub-page:horizontal:disabled {
+background: #bbb;
+border-color: #999;
+}
+
+QSlider::add-page:horizontal:disabled {
+background: #eee;
+border-color: #999;
+}
+
+QSlider::handle:horizontal:disabled {
+background: #eee;
+border: 1px solid #aaa;
+border-radius: 4px;
+}</string>
+            </property>
+            <property name="maximum">
+             <number>100</number>
+            </property>
+            <property name="pageStep">
+             <number>10</number>
+            </property>
+            <property name="sliderPosition">
+             <number>100</number>
+            </property>
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="MuteButton">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="toolTip">
+             <string>Volume - Loud
+Shortcut: Alt+M</string>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">QPushButton{
+color: #333;
+background: qradialgradient(cx: 0.3, cy: -0.4, fx: 0.3, fy: -0.4, radius: 1.35, stop:0.5 #fff, stop: 1 #d4d4d4);
+width: 25px; 
+height: 25px;
+border-radius: 10px;
+}
+
+QPushButton:pressed{
+background: qradialgradient(cx: 0.4, cy: -0.1, fx: 0.4, fy: -0.1, radius: 1.35, stop:1 #fff, stop: 0.4 #ddd);
+}
+</string>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+            <property name="icon">
+             <iconset>
+              <normaloff>icon/volume.png</normaloff>icon/volume.png</iconset>
+            </property>
+            <property name="iconSize">
+             <size>
+              <width>25</width>
+              <height>25</height>
+             </size>
+            </property>
+            <property name="shortcut">
+             <string>Alt+M</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLabel" name="VolumeDisplay">
+            <property name="minimumSize">
+             <size>
+              <width>25</width>
+              <height>0</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>25</width>
+              <height>16777215</height>
+             </size>
+            </property>
+            <property name="font">
+             <font>
+              <family>Bahnschrift SemiLight</family>
+              <pointsize>9</pointsize>
+             </font>
+            </property>
+            <property name="text">
+             <string>100</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <spacer name="horizontalSpacer_4">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeType">
+             <enum>QSizePolicy::Fixed</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>40</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+         </layout>
+        </item>
+       </layout>
+      </item>
+     </layout>
+    </item>
+   </layout>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
