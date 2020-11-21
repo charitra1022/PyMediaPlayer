@@ -6,16 +6,17 @@
 import io
 import os
 import platform
-import stagger
 import tempfile
 
+import stagger
 from PIL import Image
-from PyQt5 import QtWidgets, QtGui, QtCore
+from PyQt5 import QtGui, QtCore
 from PyQt5.QtCore import QUrl
 from PyQt5.QtMultimedia import *
 from PyQt5.QtWidgets import QFileDialog
 
 from PyMediaPlayerUI import Ui_PyMediaPlayer
+
 
 def hhmmss(ms):
     """Converting milliseconds to hh:mm:ss format"""
@@ -34,6 +35,7 @@ supported_codecs = ['.mp3', '.wav', '.aac', '.wma', '.m4a', '.ac3', '.amr', '.ts
 
 class PlaylistModel(QtCore.QAbstractListModel):
     """Class for Playlist Model"""
+
     def __init__(self, playlist, *args, **kwargs):
         super(PlaylistModel, self).__init__(*args, **kwargs)
         self.playlist = playlist
@@ -58,16 +60,16 @@ class MediaPlayer(Ui_PyMediaPlayer):
         self.setupUi(self)
         self.setFixedSize(self.frameGeometry().width(), self.frameGeometry().height())
         try:
-            self.player = QMediaPlayer()                    # initializing media player object
-            self.player.error.connect(self.error_alert)     # connecting the error handler
-            self.player.play()                              # starting it to play as soon as initialized
+            self.player = QMediaPlayer()  # initializing media player object
+            self.player.error.connect(self.error_alert)  # connecting the error handler
+            self.player.play()  # starting it to play as soon as initialized
 
-            self.playlist = QMediaPlaylist()                # create a playlist object
-            self.player.setPlaylist(self.playlist)          # Setup the playlist.
+            self.playlist = QMediaPlaylist()  # create a playlist object
+            self.player.setPlaylist(self.playlist)  # Setup the playlist.
 
             self.model = PlaylistModel(
-                self.playlist)      # building the playlist model to let it display in the PlaylistView
-            self.PlaylistView.setModel(self.model)          # setting the model to PlayListView
+                self.playlist)  # building the playlist model to let it display in the PlaylistView
+            self.PlaylistView.setModel(self.model)  # setting the model to PlayListView
 
             # triggered when the Index of the playlist changes
             self.playlist.currentIndexChanged.connect(self.playlist_position_changed)
@@ -84,6 +86,8 @@ class MediaPlayer(Ui_PyMediaPlayer):
                 self.metadata_media)  # when the media is loaded into the player, it triggers
             self.TimeSlider.valueChanged.connect(self.player.setPosition)  # when TimeSlider is slided
 
+            self.PlaylistView.doubleClicked.connect(self.remove_song)
+
             # button connections
             self.ShuffleButton.clicked.connect(self.shuffle_button)
             self.RepeatButton.clicked.connect(self.repeat_button)
@@ -96,9 +100,9 @@ class MediaPlayer(Ui_PyMediaPlayer):
             self.ForwardButton.clicked.connect(self.forward_button)
             self.OpenFiles.clicked.connect(self.openfiles_button)
 
-            self.RewindButton.setAutoRepeat(True)       # Activate long press
-            self.ForwardButton.setAutoRepeat(True)      # Activate long press
-            self.RewindButton.setAutoRepeatDelay(200)   # Long press duration
+            self.RewindButton.setAutoRepeat(True)  # Activate long press
+            self.ForwardButton.setAutoRepeat(True)  # Activate long press
+            self.RewindButton.setAutoRepeatDelay(200)  # Long press duration
             self.ForwardButton.setAutoRepeatDelay(200)  # Long press duration
 
             # Signal Handlers
@@ -106,6 +110,21 @@ class MediaPlayer(Ui_PyMediaPlayer):
 
         except Exception as err:
             print("Error in class MediaPlayer:", err)
+
+    def remove_song(self, modal_index):
+        """Remove the selected track if double clicked"""
+        try:
+            i = modal_index.row()
+            self.playlist.removeMedia(i)
+            self.model.layoutChanged.emit()
+
+            # if last track of the playlist is removed, play the new resulting last track
+            if i == self.playlist.mediaCount() and i != 0:
+                self.PlaylistView.setCurrentIndex(
+                    modal_index.siblingAtRow(i - 1))  # select the new resulting last track
+
+        except Exception as err:
+            print("Error in MediaPlayer - mouse_pressed(): ", err)
 
     def playlist_position_changed(self, i):
         """When the PlaylistView selection changes, update the player's playlist index and play the new selection"""
@@ -127,7 +146,7 @@ class MediaPlayer(Ui_PyMediaPlayer):
 
     def openfiles_button(self):
         """Adds songs from local files"""
-        filters = '*' + ' *'.join(supported_codecs)     # required format should be like "*.mp3 *m4a"
+        filters = '*' + ' *'.join(supported_codecs)  # required format should be like "*.mp3 *m4a"
 
         paths, _ = QFileDialog.getOpenFileNames(self, "Open file", "", "Audio files ({0});".format(filters))
         if paths:
@@ -297,7 +316,7 @@ class MediaPlayer(Ui_PyMediaPlayer):
             muteStatus = self.player.isMuted()
 
             self.TimeSlider.blockSignals(True)
-            self.player.setMuted(True)        # Mute when being dragged to prevent distortion
+            self.player.setMuted(True)  # Mute when being dragged to prevent distortion
 
             self.TimeSlider.setValue(position)
 
@@ -326,7 +345,7 @@ class MediaPlayer(Ui_PyMediaPlayer):
                 title = self.player.metaData(QMediaMetaData.Title)  # song title
                 artist = self.player.metaData(QMediaMetaData.AlbumArtist)  # song artist
                 year = self.player.metaData(QMediaMetaData.Year)  # song year
-                filename = self.playlist.currentMedia().canonicalUrl().fileName()   # filename of the song
+                filename = self.playlist.currentMedia().canonicalUrl().fileName()  # filename of the song
 
                 duration = self.player.metaData(QMediaMetaData.Duration)  # duration in milli-seconds
                 if not duration: duration = self.player.duration()  # if normal method fails
@@ -355,7 +374,8 @@ class MediaPlayer(Ui_PyMediaPlayer):
                 self.ThumbnailView.setScaledContents(True)  # cover the entire placeholder
                 self.ThumbnailView.setPixmap(QtGui.QPixmap(image_name))  # set the desired image as the album art
 
-                self.TitleInput.setText(str(title)) if title else self.TitleInput.setText(str(filename)) # display title
+                self.TitleInput.setText(str(title)) if title else self.TitleInput.setText(
+                    str(filename))  # display title
                 self.ArtistInput.setText(str(artist)) if artist else self.ArtistInput.setText("-")  # display artist
                 self.DateInput.setText(str(year)) if year else self.DateInput.setText("-")  # display year
                 self.SampleRateInput.setText(str(sample_rate) + ' Hz') if sample_rate else self.SampleRateInput.setText(
