@@ -20,6 +20,7 @@ Some minor issues regarding some special formats can arise, but its all up to th
 10. Elapsed/Remaining Time Display.
 11. Realtime Progress Seek Bar.
 12. Supports keyboard shortcuts for controlling the app.
+13. Open audio files from within the app.
 
 
 
@@ -32,6 +33,7 @@ Some minor issues regarding some special formats can arise, but its all up to th
 
 
 # Shortcuts
+* Open Files - <kbd>Alt + O</kbd>
 * Play/Pause - <kbd>Space</kbd>
 * Stop Playback - <kbd>Alt + X</kbd>
 * Previous Song - <kbd>Alt + P</kbd>
@@ -50,7 +52,7 @@ Shortcuts can be used only when app is in *focus*
 ## Straight-Forward (Simple) Method
 1. Clone the repository on the local machine.
 2. Run *PyMediaPlayer.py* file.
-3. Drag and drop *Audio only* files onto the Main App Window.
+3. Drag and drop *Audio only* files onto the Main App Window, or click on the *Open* button on the controls panel at the bottom.
 4. Playback will start automatically from the first file.
 5. Use the control buttons to control the app's capabilities.
 6. Play any song by clicking on the song in Playlist view.
