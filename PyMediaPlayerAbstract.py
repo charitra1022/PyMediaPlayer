@@ -176,6 +176,8 @@ class MediaPlayer(Ui_PyMediaPlayer):
         else:
             icon.addPixmap(QtGui.QPixmap("icon/play.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.PlayPauseButton.setIcon(icon)
+        if self.player.state() == QMediaPlayer.StoppedState: self.TimeSlider.setEnabled(False)
+        else: self.TimeSlider.setEnabled(True)
 
     def stop_button(self):
         self.player.stop()  # stops the player
