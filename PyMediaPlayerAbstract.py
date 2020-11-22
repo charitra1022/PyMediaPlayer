@@ -11,7 +11,7 @@ import tempfile
 import stagger
 from PIL import Image
 from PyQt5 import QtGui, QtCore
-from PyQt5.QtCore import QUrl
+from PyQt5.QtCore import QUrl, QDir
 from PyQt5.QtMultimedia import *
 from PyQt5.QtWidgets import QFileDialog
 
@@ -146,13 +146,19 @@ class MediaPlayer(Ui_PyMediaPlayer):
 
     def openfiles_button(self):
         """Adds songs from local files"""
-        filters = '*' + ' *'.join(supported_codecs)  # required format should be like "*.mp3 *m4a"
+        filters = dict()
+        if len(supported_codecs) > 1: filters['All Audio files'] = '*' + ' *'.join(supported_codecs)
+        for ext in supported_codecs: filters[ext.replace('.', '').upper() + " Files"] = "*" + ext
 
-        paths, _ = QFileDialog.getOpenFileNames(self, "Open file", "", "Audio files ({0});".format(filters))
+        filter_text_list = []
+        for key in filters.keys(): filter_text_list.append(key + " ({})".format(filters[key]))
+
+        paths, _ = QFileDialog.getOpenFileNames(self, "Open file", "", ";;".join(filter_text_list))
         if paths:
             for path in paths:
                 self.playlist.addMedia(QMediaContent(QUrl.fromLocalFile(path)))
         self.model.layoutChanged.emit()
+
         # If player is in stopped state, play the first track
         if self.player.state() != QMediaPlayer.PlayingState:
             i = self.playlist.mediaCount() - len(paths)
