@@ -91,7 +91,7 @@ class Ui_PyMediaPlayer(object):
         self.scrollArea.setWidgetResizable(True)
         self.scrollArea.setObjectName("scrollArea")
         self.scrollAreaWidgetContents = QtWidgets.QWidget()
-        self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 290, 150))
+        self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 290, 152))
         self.scrollAreaWidgetContents.setObjectName("scrollAreaWidgetContents")
         self.verticalLayout_2 = QtWidgets.QVBoxLayout(self.scrollAreaWidgetContents)
         self.verticalLayout_2.setObjectName("verticalLayout_2")
@@ -195,6 +195,7 @@ class Ui_PyMediaPlayer(object):
         self.ElaspedTimeDisplay.setObjectName("ElaspedTimeDisplay")
         self.horizontalLayoutTimePanel.addWidget(self.ElaspedTimeDisplay)
         self.TimeSlider = QtWidgets.QSlider(self.centralwidget)
+        self.TimeSlider.setEnabled(False)
         self.TimeSlider.setMouseTracking(True)
         self.TimeSlider.setStyleSheet("QSlider::groove:horizontal {\n"
 "background: white;\n"
@@ -590,6 +591,7 @@ class Ui_PyMediaPlayer(object):
         font.setFamily("Bahnschrift SemiLight")
         font.setPointSize(9)
         self.VolumeDisplay.setFont(font)
+        self.VolumeDisplay.setToolTip("")
         self.VolumeDisplay.setObjectName("VolumeDisplay")
         self.horizontalLayoutControls.addWidget(self.VolumeDisplay)
         spacerItem4 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Minimum)
@@ -605,19 +607,28 @@ class Ui_PyMediaPlayer(object):
     def retranslateUi(self, PyMediaPlayer):
         _translate = QtCore.QCoreApplication.translate
         PyMediaPlayer.setWindowTitle(_translate("PyMediaPlayer", "PyMedia Player"))
+        self.ThumbnailView.setToolTip(_translate("PyMediaPlayer", "Song Album Art"))
         self.ThumbnailView.setText(_translate("PyMediaPlayer", "<html><head/><body><p>Drag and Drop songs to add them to the Playlist or Click on the Folder icon to add songs from File Manager.</p><p>Only Audio files are supported.</p></body></html>"))
-        self.PlaylistView.setToolTip(_translate("PyMediaPlayer", "Playlist - Drag and drop songs here to play them"))
+        self.PlaylistView.setToolTip(_translate("PyMediaPlayer", "Playlist - Drag and drop songs here to play them\n"
+"Double click a song to remove it"))
         self.DateLabel.setText(_translate("PyMediaPlayer", "Year:"))
+        self.BitrateInput.setToolTip(_translate("PyMediaPlayer", "Song Bitrate"))
         self.ArtistLabel.setText(_translate("PyMediaPlayer", "Artist:"))
+        self.TitleInput.setToolTip(_translate("PyMediaPlayer", "Song Title"))
+        self.DurationInput.setToolTip(_translate("PyMediaPlayer", "Song Length"))
+        self.SampleRateInput.setToolTip(_translate("PyMediaPlayer", "Song Sample Rate"))
         self.DurationLabel.setText(_translate("PyMediaPlayer", "Duration:"))
         self.BitrateLabel.setText(_translate("PyMediaPlayer", "Bitrate:"))
+        self.DateInput.setToolTip(_translate("PyMediaPlayer", "Year of Release"))
+        self.ArtistInput.setToolTip(_translate("PyMediaPlayer", "Song Artist"))
         self.TitleLabel.setText(_translate("PyMediaPlayer", "Title:"))
         self.SizeLabel.setText(_translate("PyMediaPlayer", "Sample:"))
+        self.ElaspedTimeDisplay.setToolTip(_translate("PyMediaPlayer", "Elasped Time"))
         self.ElaspedTimeDisplay.setText(_translate("PyMediaPlayer", "00:00"))
         self.TimeSlider.setToolTip(_translate("PyMediaPlayer", "Track Seek"))
+        self.RemainingTimeDisplay.setToolTip(_translate("PyMediaPlayer", "<html><head/><body><p>Total Time</p></body></html>"))
         self.RemainingTimeDisplay.setText(_translate("PyMediaPlayer", "00:00"))
-        self.OpenFiles.setToolTip(_translate("PyMediaPlayer", "Add songs from Folder\n"
-"Shortcut: Alt+O"))
+        self.OpenFiles.setToolTip(_translate("PyMediaPlayer", "<html><head/><body><p>Open Songs</p><p>Shortcut: Alt+O</p></body></html>"))
         self.OpenFiles.setShortcut(_translate("PyMediaPlayer", "Alt+O"))
         self.ShuffleButton.setToolTip(_translate("PyMediaPlayer", "Shuffle Mode is Off\n"
 "Shortcut: Alt+S"))

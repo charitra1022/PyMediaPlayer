@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
  <class>PyMediaPlayer</class>
  <widget class="QMainWindow" name="PyMediaPlayer">
@@ -58,6 +58,9 @@
             <pointsize>16</pointsize>
            </font>
           </property>
+          <property name="toolTip">
+           <string>Song Album Art</string>
+          </property>
           <property name="styleSheet">
            <string notr="true">background:rgba(12,12,233,0.02);
 color:rgba(0,0,0,0.2);
@@ -100,7 +103,8 @@ opacity:0.1;</string>
              <bool>true</bool>
             </property>
             <property name="toolTip">
-             <string>Playlist - Drag and drop songs here to play them</string>
+             <string>Playlist - Drag and drop songs here to play them
+Double click a song to remove it</string>
             </property>
             <property name="autoFillBackground">
              <bool>false</bool>
@@ -162,7 +166,7 @@ color:rgba(0,0,0,0.9);
                <x>0</x>
                <y>0</y>
                <width>290</width>
-               <height>150</height>
+               <height>152</height>
               </rect>
              </property>
              <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -183,6 +187,9 @@ color:rgba(0,0,0,0.9);
                 </item>
                 <item row="5" column="1">
                  <widget class="QLabel" name="BitrateInput">
+                  <property name="toolTip">
+                   <string>Song Bitrate</string>
+                  </property>
                   <property name="text">
                    <string/>
                   </property>
@@ -209,6 +216,9 @@ color:rgba(0,0,0,0.9);
                     <verstretch>0</verstretch>
                    </sizepolicy>
                   </property>
+                  <property name="toolTip">
+                   <string>Song Title</string>
+                  </property>
                   <property name="text">
                    <string/>
                   </property>
@@ -219,6 +229,9 @@ color:rgba(0,0,0,0.9);
                 </item>
                 <item row="4" column="1">
                  <widget class="QLabel" name="DurationInput">
+                  <property name="toolTip">
+                   <string>Song Length</string>
+                  </property>
                   <property name="text">
                    <string/>
                   </property>
@@ -226,6 +239,9 @@ color:rgba(0,0,0,0.9);
                 </item>
                 <item row="3" column="1">
                  <widget class="QLabel" name="SampleRateInput">
+                  <property name="toolTip">
+                   <string>Song Sample Rate</string>
+                  </property>
                   <property name="text">
                    <string/>
                   </property>
@@ -259,6 +275,9 @@ color:rgba(0,0,0,0.9);
                 </item>
                 <item row="2" column="1">
                  <widget class="QLabel" name="DateInput">
+                  <property name="toolTip">
+                   <string>Year of Release</string>
+                  </property>
                   <property name="text">
                    <string/>
                   </property>
@@ -266,6 +285,9 @@ color:rgba(0,0,0,0.9);
                 </item>
                 <item row="1" column="1">
                  <widget class="QLabel" name="ArtistInput">
+                  <property name="toolTip">
+                   <string>Song Artist</string>
+                  </property>
                   <property name="text">
                    <string/>
                   </property>
@@ -331,6 +353,9 @@ color:rgba(0,0,0,0.9);
               <pointsize>9</pointsize>
              </font>
             </property>
+            <property name="toolTip">
+             <string>Elasped Time</string>
+            </property>
             <property name="text">
              <string>00:00</string>
             </property>
@@ -341,6 +366,9 @@ color:rgba(0,0,0,0.9);
           </item>
           <item>
            <widget class="QSlider" name="TimeSlider">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
             <property name="mouseTracking">
              <bool>true</bool>
             </property>
@@ -431,6 +459,9 @@ border-radius: 4px;
               <pointsize>9</pointsize>
              </font>
             </property>
+            <property name="toolTip">
+             <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Total Time&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+            </property>
             <property name="text">
              <string>00:00</string>
             </property>
@@ -470,8 +501,7 @@ border-radius: 4px;
                </sizepolicy>
               </property>
               <property name="toolTip">
-               <string>Add songs from Folder
-Shortcut: Alt+O</string>
+               <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Open Songs&lt;/p&gt;&lt;p&gt;Shortcut: Alt+O&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
               </property>
               <property name="styleSheet">
                <string notr="true">QPushButton{
@@ -1004,6 +1034,9 @@ background: qradialgradient(cx: 0.4, cy: -0.1, fx: 0.4, fy: -0.1, radius: 1.35, 
               <family>Bahnschrift SemiLight</family>
               <pointsize>9</pointsize>
              </font>
+            </property>
+            <property name="toolTip">
+             <string/>
             </property>
             <property name="text">
              <string>100</string>
