@@ -11,7 +11,7 @@ import tempfile
 import stagger
 from PIL import Image
 from PyQt5 import QtGui, QtCore
-from PyQt5.QtCore import QUrl, QDir
+from PyQt5.QtCore import QUrl
 from PyQt5.QtMultimedia import *
 from PyQt5.QtWidgets import QFileDialog
 
