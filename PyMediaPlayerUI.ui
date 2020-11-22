@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
  <class>PyMediaPlayer</class>
  <widget class="QMainWindow" name="PyMediaPlayer">
@@ -803,7 +803,7 @@ background: qradialgradient(cx: 0.4, cy: -0.1, fx: 0.4, fy: -0.1, radius: 1.35, 
                 <normaloff>icon/forward.png</normaloff>icon/forward.png</iconset>
               </property>
               <property name="shortcut">
-               <string>Ctrl+Alt+Ṇ</string>
+               <string>Ctrl+Alt+N</string>
               </property>
              </widget>
             </item>

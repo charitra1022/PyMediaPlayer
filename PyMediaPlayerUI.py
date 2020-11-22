@@ -639,7 +639,7 @@ class Ui_PyMediaPlayer(object):
         self.PlayPauseButton.setShortcut(_translate("PyMediaPlayer", "Space"))
         self.ForwardButton.setToolTip(_translate("PyMediaPlayer", "+2s/Long press to Fast Forward\n"
 "Shortcut: Ctrl+Alt+N"))
-        self.ForwardButton.setShortcut(_translate("PyMediaPlayer", "Ctrl+Alt+Ṇ"))
+        self.ForwardButton.setShortcut(_translate("PyMediaPlayer", "Ctrl+Alt+N"))
         self.NextButton.setToolTip(_translate("PyMediaPlayer", "Next Track\n"
 "Shortcut: Alt+N"))
         self.NextButton.setShortcut(_translate("PyMediaPlayer", "Alt+N"))
