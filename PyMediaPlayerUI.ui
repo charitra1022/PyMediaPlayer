@@ -135,6 +135,130 @@ color:rgba(0,0,0,0.9);
            </widget>
           </item>
           <item>
+           <layout class="QHBoxLayout" name="horizontalLayoutPlaylistbuttons">
+            <item>
+             <widget class="QPushButton" name="OpenPlaylistButton">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="toolTip">
+               <string>Open Playlist file</string>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">QPushButton{
+color: #333;
+background: qradialgradient(cx: 0.3, cy: -0.4, fx: 0.3, fy: -0.4, radius: 1.35, stop:0.5 #fff, stop: 1 #d4d4d4);
+width: 30px; 
+height: 30px;
+border-radius: 15px;
+}
+
+QPushButton:pressed{
+background: qradialgradient(cx: 0.4, cy: -0.1, fx: 0.4, fy: -0.1, radius: 1.35, stop:1 #fff, stop: 0.4 #ddd);
+}
+</string>
+              </property>
+              <property name="text">
+               <string/>
+              </property>
+              <property name="icon">
+               <iconset>
+                <normaloff>icon/open-playlist.png</normaloff>icon/open-playlist.png</iconset>
+              </property>
+              <property name="iconSize">
+               <size>
+                <width>20</width>
+                <height>20</height>
+               </size>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="EmptyPlaylistButton">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="toolTip">
+               <string>Empty current Playlist</string>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">QPushButton{
+color: #333;
+background: qradialgradient(cx: 0.3, cy: -0.4, fx: 0.3, fy: -0.4, radius: 1.35, stop:0.5 #fff, stop: 1 #d4d4d4);
+width: 30px; 
+height: 30px;
+border-radius: 15px;
+}
+
+QPushButton:pressed{
+background: qradialgradient(cx: 0.4, cy: -0.1, fx: 0.4, fy: -0.1, radius: 1.35, stop:1 #fff, stop: 0.4 #ddd);
+}
+</string>
+              </property>
+              <property name="text">
+               <string/>
+              </property>
+              <property name="icon">
+               <iconset>
+                <normaloff>icon/empty-playlist.png</normaloff>icon/empty-playlist.png</iconset>
+              </property>
+              <property name="iconSize">
+               <size>
+                <width>20</width>
+                <height>20</height>
+               </size>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="SavePlaylistButton">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="toolTip">
+               <string>Save current Playlist</string>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">QPushButton{
+color: #333;
+background: qradialgradient(cx: 0.3, cy: -0.4, fx: 0.3, fy: -0.4, radius: 1.35, stop:0.5 #fff, stop: 1 #d4d4d4);
+width: 30px; 
+height: 30px;
+border-radius: 15px;
+}
+
+QPushButton:pressed{
+background: qradialgradient(cx: 0.4, cy: -0.1, fx: 0.4, fy: -0.1, radius: 1.35, stop:1 #fff, stop: 0.4 #ddd);
+}
+</string>
+              </property>
+              <property name="text">
+               <string/>
+              </property>
+              <property name="icon">
+               <iconset>
+                <normaloff>icon/save-playlist.png</normaloff>icon/save-playlist.png</iconset>
+              </property>
+              <property name="iconSize">
+               <size>
+                <width>20</width>
+                <height>20</height>
+               </size>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item>
            <widget class="QScrollArea" name="scrollArea">
             <property name="sizePolicy">
              <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
@@ -166,7 +290,7 @@ color:rgba(0,0,0,0.9);
                <x>0</x>
                <y>0</y>
                <width>290</width>
-               <height>152</height>
+               <height>150</height>
               </rect>
              </property>
              <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -523,6 +647,12 @@ background: qradialgradient(cx: 0.4, cy: -0.1, fx: 0.4, fy: -0.1, radius: 1.35, 
               <property name="icon">
                <iconset>
                 <normaloff>icon/open-folder.png</normaloff>icon/open-folder.png</iconset>
+              </property>
+              <property name="iconSize">
+               <size>
+                <width>20</width>
+                <height>20</height>
+               </size>
               </property>
               <property name="shortcut">
                <string>Alt+O</string>

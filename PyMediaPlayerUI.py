@@ -78,6 +78,84 @@ class Ui_PyMediaPlayer(object):
         self.PlaylistView.setVerticalScrollMode(QtWidgets.QAbstractItemView.ScrollPerItem)
         self.PlaylistView.setObjectName("PlaylistView")
         self.verticalLayout.addWidget(self.PlaylistView)
+        self.horizontalLayoutPlaylistbuttons = QtWidgets.QHBoxLayout()
+        self.horizontalLayoutPlaylistbuttons.setObjectName("horizontalLayoutPlaylistbuttons")
+        self.OpenPlaylistButton = QtWidgets.QPushButton(self.centralwidget)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.OpenPlaylistButton.sizePolicy().hasHeightForWidth())
+        self.OpenPlaylistButton.setSizePolicy(sizePolicy)
+        self.OpenPlaylistButton.setStyleSheet("QPushButton{\n"
+"color: #333;\n"
+"background: qradialgradient(cx: 0.3, cy: -0.4, fx: 0.3, fy: -0.4, radius: 1.35, stop:0.5 #fff, stop: 1 #d4d4d4);\n"
+"width: 30px; \n"
+"height: 30px;\n"
+"border-radius: 15px;\n"
+"}\n"
+"\n"
+"QPushButton:pressed{\n"
+"background: qradialgradient(cx: 0.4, cy: -0.1, fx: 0.4, fy: -0.1, radius: 1.35, stop:1 #fff, stop: 0.4 #ddd);\n"
+"}\n"
+"")
+        self.OpenPlaylistButton.setText("")
+        icon1 = QtGui.QIcon()
+        icon1.addPixmap(QtGui.QPixmap("icon/open-playlist.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.OpenPlaylistButton.setIcon(icon1)
+        self.OpenPlaylistButton.setIconSize(QtCore.QSize(20, 20))
+        self.OpenPlaylistButton.setObjectName("OpenPlaylistButton")
+        self.horizontalLayoutPlaylistbuttons.addWidget(self.OpenPlaylistButton)
+        self.EmptyPlaylistButton = QtWidgets.QPushButton(self.centralwidget)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.EmptyPlaylistButton.sizePolicy().hasHeightForWidth())
+        self.EmptyPlaylistButton.setSizePolicy(sizePolicy)
+        self.EmptyPlaylistButton.setStyleSheet("QPushButton{\n"
+"color: #333;\n"
+"background: qradialgradient(cx: 0.3, cy: -0.4, fx: 0.3, fy: -0.4, radius: 1.35, stop:0.5 #fff, stop: 1 #d4d4d4);\n"
+"width: 30px; \n"
+"height: 30px;\n"
+"border-radius: 15px;\n"
+"}\n"
+"\n"
+"QPushButton:pressed{\n"
+"background: qradialgradient(cx: 0.4, cy: -0.1, fx: 0.4, fy: -0.1, radius: 1.35, stop:1 #fff, stop: 0.4 #ddd);\n"
+"}\n"
+"")
+        self.EmptyPlaylistButton.setText("")
+        icon2 = QtGui.QIcon()
+        icon2.addPixmap(QtGui.QPixmap("icon/empty-playlist.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.EmptyPlaylistButton.setIcon(icon2)
+        self.EmptyPlaylistButton.setIconSize(QtCore.QSize(20, 20))
+        self.EmptyPlaylistButton.setObjectName("EmptyPlaylistButton")
+        self.horizontalLayoutPlaylistbuttons.addWidget(self.EmptyPlaylistButton)
+        self.SavePlaylistButton = QtWidgets.QPushButton(self.centralwidget)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.SavePlaylistButton.sizePolicy().hasHeightForWidth())
+        self.SavePlaylistButton.setSizePolicy(sizePolicy)
+        self.SavePlaylistButton.setStyleSheet("QPushButton{\n"
+"color: #333;\n"
+"background: qradialgradient(cx: 0.3, cy: -0.4, fx: 0.3, fy: -0.4, radius: 1.35, stop:0.5 #fff, stop: 1 #d4d4d4);\n"
+"width: 30px; \n"
+"height: 30px;\n"
+"border-radius: 15px;\n"
+"}\n"
+"\n"
+"QPushButton:pressed{\n"
+"background: qradialgradient(cx: 0.4, cy: -0.1, fx: 0.4, fy: -0.1, radius: 1.35, stop:1 #fff, stop: 0.4 #ddd);\n"
+"}\n"
+"")
+        self.SavePlaylistButton.setText("")
+        icon3 = QtGui.QIcon()
+        icon3.addPixmap(QtGui.QPixmap("icon/save-playlist.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.SavePlaylistButton.setIcon(icon3)
+        self.SavePlaylistButton.setIconSize(QtCore.QSize(20, 20))
+        self.SavePlaylistButton.setObjectName("SavePlaylistButton")
+        self.horizontalLayoutPlaylistbuttons.addWidget(self.SavePlaylistButton)
+        self.verticalLayout.addLayout(self.horizontalLayoutPlaylistbuttons)
         self.scrollArea = QtWidgets.QScrollArea(self.centralwidget)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Preferred)
         sizePolicy.setHorizontalStretch(0)
@@ -91,7 +169,7 @@ class Ui_PyMediaPlayer(object):
         self.scrollArea.setWidgetResizable(True)
         self.scrollArea.setObjectName("scrollArea")
         self.scrollAreaWidgetContents = QtWidgets.QWidget()
-        self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 290, 152))
+        self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 290, 150))
         self.scrollAreaWidgetContents.setObjectName("scrollAreaWidgetContents")
         self.verticalLayout_2 = QtWidgets.QVBoxLayout(self.scrollAreaWidgetContents)
         self.verticalLayout_2.setObjectName("verticalLayout_2")
@@ -287,9 +365,10 @@ class Ui_PyMediaPlayer(object):
 "}\n"
 "")
         self.OpenFiles.setText("")
-        icon1 = QtGui.QIcon()
-        icon1.addPixmap(QtGui.QPixmap("icon/open-folder.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.OpenFiles.setIcon(icon1)
+        icon4 = QtGui.QIcon()
+        icon4.addPixmap(QtGui.QPixmap("icon/open-folder.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.OpenFiles.setIcon(icon4)
+        self.OpenFiles.setIconSize(QtCore.QSize(20, 20))
         self.OpenFiles.setObjectName("OpenFiles")
         self.horizontalLayout_2.addWidget(self.OpenFiles)
         spacerItem1 = QtWidgets.QSpacerItem(15, 20, QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Minimum)
@@ -313,9 +392,9 @@ class Ui_PyMediaPlayer(object):
 "}\n"
 "")
         self.ShuffleButton.setText("")
-        icon2 = QtGui.QIcon()
-        icon2.addPixmap(QtGui.QPixmap("icon/shuffle-off.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.ShuffleButton.setIcon(icon2)
+        icon5 = QtGui.QIcon()
+        icon5.addPixmap(QtGui.QPixmap("icon/shuffle-off.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.ShuffleButton.setIcon(icon5)
         self.ShuffleButton.setObjectName("ShuffleButton")
         self.horizontalLayout_2.addWidget(self.ShuffleButton)
         self.RepeatButton = QtWidgets.QPushButton(self.centralwidget)
@@ -337,9 +416,9 @@ class Ui_PyMediaPlayer(object):
 "}\n"
 "")
         self.RepeatButton.setText("")
-        icon3 = QtGui.QIcon()
-        icon3.addPixmap(QtGui.QPixmap("icon/repeat-all.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.RepeatButton.setIcon(icon3)
+        icon6 = QtGui.QIcon()
+        icon6.addPixmap(QtGui.QPixmap("icon/repeat-all.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.RepeatButton.setIcon(icon6)
         self.RepeatButton.setObjectName("RepeatButton")
         self.horizontalLayout_2.addWidget(self.RepeatButton)
         self.StopButton = QtWidgets.QPushButton(self.centralwidget)
@@ -361,9 +440,9 @@ class Ui_PyMediaPlayer(object):
 "}\n"
 "")
         self.StopButton.setText("")
-        icon4 = QtGui.QIcon()
-        icon4.addPixmap(QtGui.QPixmap("icon/stop.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.StopButton.setIcon(icon4)
+        icon7 = QtGui.QIcon()
+        icon7.addPixmap(QtGui.QPixmap("icon/stop.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.StopButton.setIcon(icon7)
         self.StopButton.setObjectName("StopButton")
         self.horizontalLayout_2.addWidget(self.StopButton)
         self.horizontalLayoutControls.addLayout(self.horizontalLayout_2)
@@ -390,9 +469,9 @@ class Ui_PyMediaPlayer(object):
 "}\n"
 "")
         self.PreviousButton.setText("")
-        icon5 = QtGui.QIcon()
-        icon5.addPixmap(QtGui.QPixmap("icon/previous.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.PreviousButton.setIcon(icon5)
+        icon8 = QtGui.QIcon()
+        icon8.addPixmap(QtGui.QPixmap("icon/previous.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.PreviousButton.setIcon(icon8)
         self.PreviousButton.setObjectName("PreviousButton")
         self.horizontalLayout.addWidget(self.PreviousButton)
         self.RewindButton = QtWidgets.QPushButton(self.centralwidget)
@@ -414,9 +493,9 @@ class Ui_PyMediaPlayer(object):
 "}\n"
 "")
         self.RewindButton.setText("")
-        icon6 = QtGui.QIcon()
-        icon6.addPixmap(QtGui.QPixmap("icon/rewind.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.RewindButton.setIcon(icon6)
+        icon9 = QtGui.QIcon()
+        icon9.addPixmap(QtGui.QPixmap("icon/rewind.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.RewindButton.setIcon(icon9)
         self.RewindButton.setObjectName("RewindButton")
         self.horizontalLayout.addWidget(self.RewindButton)
         self.PlayPauseButton = QtWidgets.QPushButton(self.centralwidget)
@@ -438,9 +517,9 @@ class Ui_PyMediaPlayer(object):
 "}\n"
 "")
         self.PlayPauseButton.setText("")
-        icon7 = QtGui.QIcon()
-        icon7.addPixmap(QtGui.QPixmap("icon/play.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.PlayPauseButton.setIcon(icon7)
+        icon10 = QtGui.QIcon()
+        icon10.addPixmap(QtGui.QPixmap("icon/play.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.PlayPauseButton.setIcon(icon10)
         self.PlayPauseButton.setIconSize(QtCore.QSize(25, 25))
         self.PlayPauseButton.setObjectName("PlayPauseButton")
         self.horizontalLayout.addWidget(self.PlayPauseButton)
@@ -463,9 +542,9 @@ class Ui_PyMediaPlayer(object):
 "}\n"
 "")
         self.ForwardButton.setText("")
-        icon8 = QtGui.QIcon()
-        icon8.addPixmap(QtGui.QPixmap("icon/forward.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.ForwardButton.setIcon(icon8)
+        icon11 = QtGui.QIcon()
+        icon11.addPixmap(QtGui.QPixmap("icon/forward.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.ForwardButton.setIcon(icon11)
         self.ForwardButton.setObjectName("ForwardButton")
         self.horizontalLayout.addWidget(self.ForwardButton)
         self.NextButton = QtWidgets.QPushButton(self.centralwidget)
@@ -487,9 +566,9 @@ class Ui_PyMediaPlayer(object):
 "}\n"
 "")
         self.NextButton.setText("")
-        icon9 = QtGui.QIcon()
-        icon9.addPixmap(QtGui.QPixmap("icon/next.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.NextButton.setIcon(icon9)
+        icon12 = QtGui.QIcon()
+        icon12.addPixmap(QtGui.QPixmap("icon/next.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.NextButton.setIcon(icon12)
         self.NextButton.setObjectName("NextButton")
         self.horizontalLayout.addWidget(self.NextButton)
         self.horizontalLayoutControls.addLayout(self.horizontalLayout)
@@ -578,9 +657,9 @@ class Ui_PyMediaPlayer(object):
 "}\n"
 "")
         self.MuteButton.setText("")
-        icon10 = QtGui.QIcon()
-        icon10.addPixmap(QtGui.QPixmap("icon/volume.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.MuteButton.setIcon(icon10)
+        icon13 = QtGui.QIcon()
+        icon13.addPixmap(QtGui.QPixmap("icon/volume.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.MuteButton.setIcon(icon13)
         self.MuteButton.setIconSize(QtCore.QSize(25, 25))
         self.MuteButton.setObjectName("MuteButton")
         self.horizontalLayoutControls.addWidget(self.MuteButton)
@@ -611,6 +690,9 @@ class Ui_PyMediaPlayer(object):
         self.ThumbnailView.setText(_translate("PyMediaPlayer", "<html><head/><body><p>Drag and Drop songs to add them to the Playlist or Click on the Folder icon to add songs from File Manager.</p><p>Only Audio files are supported.</p></body></html>"))
         self.PlaylistView.setToolTip(_translate("PyMediaPlayer", "Playlist - Drag and drop songs here to play them\n"
 "Double click a song to remove it"))
+        self.OpenPlaylistButton.setToolTip(_translate("PyMediaPlayer", "Open Playlist file"))
+        self.EmptyPlaylistButton.setToolTip(_translate("PyMediaPlayer", "Empty current Playlist"))
+        self.SavePlaylistButton.setToolTip(_translate("PyMediaPlayer", "Save current Playlist"))
         self.DateLabel.setText(_translate("PyMediaPlayer", "Year:"))
         self.BitrateInput.setToolTip(_translate("PyMediaPlayer", "Song Bitrate"))
         self.ArtistLabel.setText(_translate("PyMediaPlayer", "Artist:"))
