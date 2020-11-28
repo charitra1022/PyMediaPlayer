@@ -37,7 +37,7 @@ from PyQt5.QtMultimedia import QMediaPlayer, QMediaContent
 from PyQt5.QtWidgets import QMainWindow
 
 # Local imports
-from PyMediaPlayerAbstract import MediaPlayer, hostOS, supported_codecs
+from PyMediaPlayerAbstract import MediaPlayer, hostOS
 from SingleApplication import SingleApplicationWithMessaging, SingleApplication
 
 # change the media plugin in Windows OS for better media support
@@ -75,46 +75,15 @@ class MainWindow(QMainWindow, MediaPlayer):
     def dropEvent(self, e):
         """When the user drops the object to the Window, process and filter them, and then add them to playlist"""
         try:
+            songs = []
             for url in e.mimeData().urls():
-                # accept only specific file extensions
-                if any(ext in url.fileName() for ext in supported_codecs):
-                    self.playlist.addMedia(QMediaContent(url))  # add media to the PlaylistView
+                songs.append(url.toLocalFile())     # get the absolute path of all
+            self.add_songs(songs,)          # add all songs to the playlist
 
-            self.model.layoutChanged.emit()  # emit signal to update the PlaylistView to show up new data
-
-            # If player is in stopped state, play the first track
-            if self.player.state() != QMediaPlayer.PlayingState:
-                i = self.playlist.mediaCount() - len(e.mimeData().urls())
-                self.playlist.setCurrentIndex(i)
-                self.player.play()
         except Exception as err:
             print("Error in dropEvent:", err)
 
-    def add_songs(self, paths):
-        """Adds songs to the current playlist from their absolute file path.
-            A list of paths is passed as an argument to this function"""
-        try:
-            songs = []
-            # accept only specific file extensions
-            for path in paths:
-                if any(ext in path for ext in supported_codecs): songs.append(path)
 
-            # if any song is present, perform action
-            if songs:
-                for song in songs:
-                    url = QUrl.fromLocalFile(song)
-                    self.playlist.addMedia(QMediaContent(url))  # add media to the PlaylistView
-
-                self.model.layoutChanged.emit()  # emit signal to update the PlaylistView to show up new data
-
-                # If player is in stopped state, play the first track from new list of songs
-                if self.player.state() != QMediaPlayer.PlayingState:
-                    i = self.playlist.mediaCount() - len(songs)
-                    self.playlist.setCurrentIndex(i)
-                    self.player.play()
-
-        except Exception as err:
-            print("Error in add_songs method:", err)
 
     def accept_songs(self, message):
         """If another instance of app is running,
