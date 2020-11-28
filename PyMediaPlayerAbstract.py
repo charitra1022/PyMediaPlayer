@@ -13,7 +13,7 @@ from PIL import Image
 from PyQt5 import QtGui, QtCore
 from PyQt5.QtCore import QUrl
 from PyQt5.QtMultimedia import *
-from PyQt5.QtWidgets import QFileDialog
+from PyQt5.QtWidgets import QFileDialog, QMessageBox
 
 from PyMediaPlayerUI import Ui_PyMediaPlayer
 
@@ -31,6 +31,29 @@ def hhmmss(ms):
 hostOS = platform.system().lower()
 # accept only [.mp3 .wav .aac .wma .m4a .ac3 .amr .ts .flac] file extensions
 supported_codecs = ['.mp3', '.wav', '.aac', '.wma', '.m4a', '.ac3', '.amr', '.ts', '.flac']
+# keep track of all songs added till now to the player
+songs_database = []
+# supports playlist file only of this type
+playlist_extension = ".pyplaylist"
+
+
+def get_distinct_items(list1):
+    """Removes duplicates from parameter,
+        appends distinct only items to 'songs' list,
+        returns list to be added to playlist"""
+
+    list1 = list(set(list1))  # remove duplicates
+    global songs_database
+    if not songs_database:
+        songs_database = list1
+        return list1
+    else:
+        list2 = []
+        for item in list1:
+            if not item in songs_database:
+                songs_database.append(item)
+                list2.append(item)
+        return list2
 
 
 class PlaylistModel(QtCore.QAbstractListModel):
@@ -100,6 +123,10 @@ class MediaPlayer(Ui_PyMediaPlayer):
             self.ForwardButton.clicked.connect(self.forward_button)
             self.OpenFiles.clicked.connect(self.openfiles_button)
 
+            self.OpenPlaylistButton.clicked.connect(self.open_playlist_button)
+            self.SavePlaylistButton.clicked.connect(self.save_playlist_button)
+            self.EmptyPlaylistButton.clicked.connect(self.empty_playlist_button)
+
             self.RewindButton.setAutoRepeat(True)  # Activate long press
             self.ForwardButton.setAutoRepeat(True)  # Activate long press
             self.RewindButton.setAutoRepeatDelay(200)  # Long press duration
@@ -111,17 +138,99 @@ class MediaPlayer(Ui_PyMediaPlayer):
         except Exception as err:
             print("Error in class MediaPlayer:", err)
 
-    def remove_song(self, modal_index):
-        """Remove the selected track if double clicked"""
+    def open_playlist_button(self):
+        """Open local playlist file and add songs to the player playlist"""
+
         try:
-            i = modal_index.row()
-            self.playlist.removeMedia(i)
-            self.model.layoutChanged.emit()
+            filter_text = "PyMediaPlayer Playlist (*{})".format(playlist_extension)
+
+            dir = os.path.expanduser('~') + "\\Documents\\PyMediaPlayer"
+            if not os.path.isdir(dir): dir = ""
+
+            file, _ = QFileDialog.getOpenFileName(self, "Open playlist file", dir, filter_text)
+            with open(file, 'r', encoding='utf-8') as playlist_file:
+                songs = playlist_file.readlines()
+                songs = ''.join(songs).split('\n')
+                self.add_songs(songs,)
+
+        except Exception as err:
+            print("Inside open_playlist_button(): ", err)
+
+    def empty_playlist_button(self):
+        self.playlist.removeMedia(0, self.playlist.mediaCount())
+        self.model.layoutChanged.emit()
+        global songs_database
+        songs_database = []
+
+
+    def save_playlist_button(self):
+        """Save the current playlist as a local file"""
+
+        status = self.playlist.mediaCount()
+        if not status:
+            alert_box = QMessageBox(self)
+            alert_box.setText("Playlist is empty!")
+            alert_box.setIcon(QMessageBox.Information)
+            alert_box.setInformativeText("Add some songs to the playlist to save it as a file.")
+            alert_box.show()
+        else:
+            filter_text = "PyMediaPlayer Playlist (*{})".format(playlist_extension)
+            dir = os.path.expanduser('~') + "\\Documents\\PyMediaPlayer"
+
+            try: os.mkdir(dir)
+            except Exception as err: pass
+
+            name, _ = QFileDialog.getSaveFileName(self, 'Save File', dir, filter=filter_text)
+            if name:
+                with open(name, 'w', encoding='utf-8') as file:
+                    file.write('\n'.join(songs_database))
+
+
+    def add_songs(self, paths):
+        """Adds songs to the current playlist from their absolute file path.
+            A list of paths is passed as an argument to this function"""
+        try:
+            songs = []
+            # accept only specific file extensions
+            for path in paths:
+                if any(ext in path for ext in supported_codecs): songs.append(path)
+
+            # if any song is present, perform action
+            if songs:
+                songs = get_distinct_items(songs)       # only add songs which are not present
+
+                for song in songs:
+                    url = QUrl.fromLocalFile(song)
+                    self.playlist.addMedia(QMediaContent(url))  # add media to the PlaylistView
+
+                self.model.layoutChanged.emit()  # emit signal to update the PlaylistView to show up new data
+
+                # If player is in stopped state, play the first track from new list of songs
+                if self.player.state() != QMediaPlayer.PlayingState:
+                    i = self.playlist.mediaCount() - len(songs)
+                    self.playlist.setCurrentIndex(i)
+                    self.player.play()
+
+        except Exception as err:
+            print("Error in add_songs method:", err)
+
+
+    def remove_song(self, modal_index):
+        """Remove the selected track if double clicked, and remove it from the 'songs' list"""
+        try:
+            index = modal_index.row()
+            song_removed = self.playlist.media(index).canonicalUrl().toLocalFile()
+
+            self.playlist.removeMedia(index)    # remove song from playlist
+            global songs_database                        # import database into the function
+            songs_database.remove(song_removed)          # remove song from the database
+
+            self.model.layoutChanged.emit()     # update playlist view
 
             # if last track of the playlist is removed, play the new resulting last track
-            if i == self.playlist.mediaCount() and i != 0:
+            if index == self.playlist.mediaCount() and index != 0:
                 self.PlaylistView.setCurrentIndex(
-                    modal_index.siblingAtRow(i - 1))  # select the new resulting last track
+                    modal_index.siblingAtRow(index - 1))  # select the new resulting last track
 
         except Exception as err:
             print("Error in MediaPlayer - mouse_pressed(): ", err)
@@ -145,7 +254,8 @@ class MediaPlayer(Ui_PyMediaPlayer):
             print("Error in MediaPlayer - playlist_selection_changed(): ", err)
 
     def openfiles_button(self):
-        """Adds songs from local files"""
+        """Adds songs from local files if not already present in the playlist"""
+
         filters = dict()
         if len(supported_codecs) > 1: filters['All Audio files'] = '*' + ' *'.join(supported_codecs)
         for ext in supported_codecs: filters[ext.replace('.', '').upper() + " Files"] = "*" + ext
@@ -154,16 +264,7 @@ class MediaPlayer(Ui_PyMediaPlayer):
         for key in filters.keys(): filter_text_list.append(key + " ({})".format(filters[key]))
 
         paths, _ = QFileDialog.getOpenFileNames(self, "Open file", "", ";;".join(filter_text_list))
-        if paths:
-            for path in paths:
-                self.playlist.addMedia(QMediaContent(QUrl.fromLocalFile(path)))
-        self.model.layoutChanged.emit()
-
-        # If player is in stopped state, play the first track
-        if self.player.state() != QMediaPlayer.PlayingState:
-            i = self.playlist.mediaCount() - len(paths)
-            self.playlist.setCurrentIndex(i)
-            self.player.play()
+        self.add_songs(paths,)
 
     def play_pause_icon(self):
         """Change the icon of the Play/Pause button based on the state of the MediaPlayer
