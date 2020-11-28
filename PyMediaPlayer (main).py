@@ -32,8 +32,6 @@
 import os
 import sys
 import tempfile
-from PyQt5.QtCore import QUrl
-from PyQt5.QtMultimedia import QMediaPlayer, QMediaContent
 from PyQt5.QtWidgets import QMainWindow
 
 # Local imports
