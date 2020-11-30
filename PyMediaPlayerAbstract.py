@@ -137,7 +137,7 @@ class MediaPlayer(Ui_PyMediaPlayer):
             # Signal Handlers
             self.VolumeSlider.valueChanged.connect(self.volume_changed)  # when user slides volume slider
 
-            # default valiue track
+            # default value track
             default_ui_values['thumbnail'] = self.ThumbnailView.text()
             default_ui_values['time'] = self.RemainingTimeDisplay.text()
             default_ui_values['info'] = self.TitleInput.text()
@@ -153,7 +153,9 @@ class MediaPlayer(Ui_PyMediaPlayer):
         try:
             filter_text = "PyMediaPlayer Playlist (*{})".format(playlist_extension)
 
-            dir = os.path.expanduser('~') + "\\Documents\\PyMediaPlayer"
+            if hostOS == 'windows': dir = os.path.expanduser('~') + "\\Documents\\PyMediaPlayer"
+            if hostOS == 'linux': dir = os.path.expanduser('~') + "/Documents/PyMediaPlayer"
+
             if not os.path.isdir(dir): dir = ""
 
             file, _ = QFileDialog.getOpenFileName(self, "Open playlist file", dir, filter_text)
@@ -168,14 +170,11 @@ class MediaPlayer(Ui_PyMediaPlayer):
 
     def empty_playlist_button(self):
         """Removes all songs from the player playlist and resets it"""
-        
         self.playlist.removeMedia(0, self.playlist.mediaCount())
         self.model.layoutChanged.emit()
         global songs_database
         songs_database = []
         self.remove_metadata_media()
-
-
 
     def save_playlist_button(self):
         """Save the current playlist as a local file"""
@@ -189,7 +188,9 @@ class MediaPlayer(Ui_PyMediaPlayer):
             alert_box.show()
         else:
             filter_text = "PyMediaPlayer Playlist (*{})".format(playlist_extension)
-            dir = os.path.expanduser('~') + "\\Documents\\PyMediaPlayer"
+
+            if hostOS == 'windows': dir = os.path.expanduser('~') + "\\Documents\\PyMediaPlayer"
+            if hostOS == 'linux': dir = os.path.expanduser('~') + "/Documents/PyMediaPlayer"
 
             try: os.mkdir(dir)
             except Exception as err: pass
@@ -452,7 +453,6 @@ class MediaPlayer(Ui_PyMediaPlayer):
 
     def remove_metadata_media(self):
         """Remove metadata information from the UI objects"""
-
         self.TitleInput.setText(default_ui_values['info'])
         self.DateInput.setText(default_ui_values['info'])
         self.SampleRateInput.setText(default_ui_values['info'])
@@ -471,26 +471,21 @@ class MediaPlayer(Ui_PyMediaPlayer):
                     file_path = self.player.currentMedia().canonicalUrl().toLocalFile()  # get the abosulte path of the music
 
                     # get the absolute path of temporary folder of PyMediaPlayer
-                    if hostOS == 'windows':
-                        temp_dir = str(tempfile.gettempdir()) + '\\PyMediaPlayer\\'  # for windows system
-                    if hostOS == 'linux':
-                        temp_dir = str(tempfile.gettempdir()) + '/PyMediaPlayer/'  # for linux system
+                    if hostOS == 'windows': temp_dir = str(tempfile.gettempdir()) + '\\PyMediaPlayer\\'
+                    if hostOS == 'linux': temp_dir = str(tempfile.gettempdir()) + '/PyMediaPlayer/'
 
-                    try:
-                        os.mkdir(temp_dir)  # create a temporary folder for PyMediaPlayer if not present
-                    except Exception as e:
-                        pass  # generates error if already present
+                    try: os.mkdir(temp_dir)  # create a temporary folder for PyMediaPlayer if not present
+                    except Exception as e: pass  # generates error if already present
 
-                    title = self.player.metaData(QMediaMetaData.Title)  # song title
-                    artist = self.player.metaData(QMediaMetaData.AlbumArtist)  # song artist
-                    year = self.player.metaData(QMediaMetaData.Year)  # song year
+                    title = self.player.metaData(QMediaMetaData.Title)                 # song title
+                    artist = self.player.metaData(QMediaMetaData.AlbumArtist)          # song artist
+                    year = self.player.metaData(QMediaMetaData.Year)                   # song year
                     filename = self.playlist.currentMedia().canonicalUrl().fileName()  # filename of the song
+                    duration = hhmmss(self.songDuration)                               # duration in hh:mm:ss style
 
-                    duration = hhmmss(self.songDuration)  # duration in hh:mm:ss style
-
-                    bitrate = self.player.metaData(QMediaMetaData.AudioBitRate)  # song bitrate in bits/sec
+                    bitrate = self.player.metaData(QMediaMetaData.AudioBitRate)        # song bitrate in bits/sec
                     if not bitrate: bitrate = self.player.metaData("nominal-bitrate")  # if normal method fails
-                    if bitrate: bitrate //= 1000  # song bitrate in kilobits/sec
+                    if bitrate: bitrate //= 1000                                       # song bitrate in kilobits/sec
 
                     sample_rate = self.player.metaData(QMediaMetaData.SampleRate)  # song sample rate in Hz
 
