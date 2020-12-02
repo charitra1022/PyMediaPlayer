@@ -151,7 +151,7 @@ class MediaPlayer(Ui_PyMediaPlayer):
         """Open local playlist file and add songs to the player playlist"""
 
         try:
-            filter_text = "PyMediaPlayer Playlist (*{})".format(playlist_extension)
+            filter_text = "PyMediaPlayer Playlist (*{});;".format(playlist_extension)
 
             if hostOS == 'windows': dir = os.path.expanduser('~') + "\\Documents\\PyMediaPlayer"
             if hostOS == 'linux': dir = os.path.expanduser('~') + "/Documents/PyMediaPlayer"
@@ -187,7 +187,7 @@ class MediaPlayer(Ui_PyMediaPlayer):
             alert_box.setInformativeText("Add some songs to the playlist to save it as a file.")
             alert_box.show()
         else:
-            filter_text = "PyMediaPlayer Playlist (*{})".format(playlist_extension)
+            filter_text = "PyMediaPlayer Playlist (*{});;".format(playlist_extension)
 
             if hostOS == 'windows': dir = os.path.expanduser('~') + "\\Documents\\PyMediaPlayer"
             if hostOS == 'linux': dir = os.path.expanduser('~') + "/Documents/PyMediaPlayer"
