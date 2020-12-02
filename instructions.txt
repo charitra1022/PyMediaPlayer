@@ -12,3 +12,10 @@ Some minor issues regarding some special formats can arise, but its all up to th
 There might be some unrecognized issues in non-windows platform like Linux/macOS. So, contribution to this project is always welcomed.
 Read the CONTRIBUTING.md file for more info on how to contribute to this project.
 
+
+
+INSTRUCTIONS ON HOW TO USE THE PROJECT:-
+1. Install the above listed modules using pip in Windows and pip3 in Linux.
+2. Compile the "PyMediaPlayer (main).py" file.
+3. Hover over the Player buttons and UI to learn about their functions and shortcuts.
+

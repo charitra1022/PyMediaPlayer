@@ -8,7 +8,7 @@ Some minor issues regarding some special formats can arise, but its all up to th
 
 
 # Features
-1. Background Playback
+1. Background Playback.
 2. Wide range of supported audio formats
 3. Automatic Playback when idle.
 4. Drag and drop multiple files at once.
@@ -21,6 +21,7 @@ Some minor issues regarding some special formats can arise, but its all up to th
 11. Realtime Progress Seek Bar.
 12. Supports keyboard shortcuts for controlling the app.
 13. Open audio files from within the app.
+14. Export/import Playlist files.
 
 
 
