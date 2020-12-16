@@ -207,7 +207,7 @@ class MediaPlayer(Ui_PyMediaPlayer):
             songs = []
             # accept only specific file extensions
             for path in paths:
-                if any(ext in path for ext in supported_codecs): songs.append(path)
+                if any(path.endswith(ext) for ext in supported_codecs): songs.append(path)
 
             # if any song is present, perform action
             if songs:

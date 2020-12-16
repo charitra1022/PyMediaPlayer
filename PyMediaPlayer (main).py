@@ -32,6 +32,7 @@
 import os
 import sys
 import tempfile
+import shutil
 from PyQt5.QtWidgets import QMainWindow
 
 # Local imports
@@ -107,7 +108,6 @@ class MainWindow(QMainWindow, MediaPlayer):
             temp_dir = str(tempfile.gettempdir()) + '/PyMediaPlayer/'
 
         try:
-            import shutil
             shutil.rmtree(temp_dir, ignore_errors=True)     # delete temporary files after closing
         except Exception as err:
             print("Error in closeEvent function:", err)
