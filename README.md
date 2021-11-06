@@ -81,4 +81,4 @@ Please read [CONTRIBUTING.md](CONTRIBUTING.md) for more info on contribution.
 # Connect with me
 [YouTube](https://www.youtube.com/c/EverythingComputerized)
 
-[Linkedin](https://www.linkedin.com/in/chiku1022/)
+[Linkedin](https://www.linkedin.com/in/charitra1022/)
