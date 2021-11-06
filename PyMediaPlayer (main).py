@@ -6,7 +6,7 @@
 #       PyMediaPlayer
 #       Made by "Charitra Agarwal"
 #       "www.youtube.com/c/EverythingComputerized"
-#       "www.linkedin.com/in/chiku1022/"
+#       "www.linkedin.com/in/charitra1022/"
 
 
         ############               ###
